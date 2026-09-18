@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>my little world ♡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   TOKENS
+========================================================= */
+:root{
+  --paper:#FBF3EA;
+  --paper-2:#F6ECDE;
+  --card:#FFFDF9;
+  --ink:#5B4A46;
+  --ink-soft:#9C877E;
+  --pink:#F2D3DB;
+  --pink-deep:#E3A9B9;
+  --rose:#CB7F91;
+  --lavender:#E1D6EF;
+  --lavender-deep:#C6B3E0;
+  --sage:#C7D6BA;
+  --sage-deep:#9FB98C;
+  --butter:#F5E3AC;
+  --butter-deep:#E8C978;
+  --sky:#C9E1EA;
+  --line:#EAD9CE;
+  --shadow: 0 8px 24px rgba(150, 110, 90, 0.14);
+  --shadow-sm: 0 3px 10px rgba(150, 110, 90, 0.12);
+  --radius: 22px;
+  --radius-sm: 14px;
+  --font-hand:'Caveat', cursive;
+  --font-body:'Quicksand', sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#241E2C;
+    --paper-2:#2C2436;
+    --card:#2F2738;
+    --ink:#F3E7E0;
+    --ink-soft:#C3AEB0;
+    --pink:#4A2E3B;
+    --pink-deep:#6B3D4E;
+    --rose:#E3A9B9;
+    --lavender:#3B3050;
+    --lavender-deep:#5A4A79;
+    --sage:#374A38;
+    --sage-deep:#4F6B4C;
+    --butter:#4A3F2A;
+    --butter-deep:#6B5A34;
+    --sky:#28414A;
+    --line:#463A4C;
+    --shadow: 0 8px 24px rgba(0,0,0,0.35);
+    --shadow-sm: 0 3px 10px rgba(0,0,0,0.3);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#241E2C;
+  --paper-2:#2C2436;
+  --card:#2F2738;
+  --ink:#F3E7E0;
+  --ink-soft:#C3AEB0;
+  --pink:#4A2E3B;
+  --pink-deep:#6B3D4E;
+  --rose:#E3A9B9;
+  --lavender:#3B3050;
+  --lavender-deep:#5A4A79;
+  --sage:#374A38;
+  --sage-deep:#4F6B4C;
+  --butter:#4A3F2A;
+  --butter-deep:#6B5A34;
+  --sky:#28414A;
+  --line:#463A4C;
+  --shadow: 0 8px 24px rgba(0,0,0,0.35);
+  --shadow-sm: 0 3px 10px rgba(0,0,0,0.3);
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;height:100%;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  overflow-x:hidden;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(150,110,90,0.06) 1px, transparent 0);
+  background-size:22px 22px;
+}
+img{max-width:100%;display:block;}
+button{font-family:var(--font-body);cursor:pointer;}
+input,textarea,select{font-family:var(--font-body);}
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-thumb{background:var(--pink-deep);border-radius:10px;}
+::-webkit-scrollbar-track{background:transparent;}
+
+.hand{font-family:var(--font-hand);}
+.btn{
+  border:none;border-radius:999px;padding:10px 18px;
+  background:var(--pink-deep);color:var(--ink);font-weight:600;
+  box-shadow:var(--shadow-sm); transition:transform .15s ease, box-shadow .15s ease;
+  font-size:14px;
+}
+.btn:hover{transform:translateY(-2px) rotate(-0.5deg);box-shadow:var(--shadow);}
+.btn:active{transform:translateY(0);}
+.btn.secondary{background:var(--lavender);}
+.btn.soft{background:var(--card);border:1.5px dashed var(--line);}
+.btn.small{padding:6px 12px;font-size:12.5px;}
+.btn.icon{padding:8px 10px;border-radius:14px;}
+.btn.danger{background:#e5b2b2;}
+
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+  padding:18px;
+  position:relative;
+}
+.chip{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--lavender);color:var(--ink);
+  padding:4px 12px;border-radius:999px;font-size:12.5px;font-weight:600;
+}
+.tape{
+  position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-2deg);
+  width:70px;height:22px;background:rgba(240,220,150,0.55);
+  box-shadow:0 2px 4px rgba(0,0,0,0.08);
+}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+#app{display:flex;min-height:100vh;}
+#sidebar{
+  width:220px;flex-shrink:0;background:var(--paper-2);
+  border-right:1.5px dashed var(--line);
+  padding:20px 14px;display:flex;flex-direction:column;gap:4px;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+#sidebar .brand{
+  font-family:var(--font-hand);font-size:28px;font-weight:700;
+  margin:4px 6px 18px;color:var(--rose);
+}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;
+  color:var(--ink);text-decoration:none;font-weight:600;font-size:14.5px;
+  transition:background .15s ease, transform .15s ease;
+}
+.nav-item .emoji{font-size:18px;}
+.nav-item:hover{background:var(--pink);transform:translateX(2px);}
+.nav-item.active{background:var(--pink-deep);}
+#sidebar-bottom{margin-top:auto;display:flex;gap:8px;padding:8px 6px;}
+
+#content{flex:1;padding:26px 30px 100px;max-width:1200px;}
+.page-title{font-family:var(--font-hand);font-size:36px;margin:0 0 4px;color:var(--rose);}
+.page-sub{color:var(--ink-soft);margin:0 0 20px;font-size:14.5px;}
+
+.grid{display:grid;gap:16px;}
+.grid.cols-2{grid-template-columns:repeat(2,1fr);}
+.grid.cols-3{grid-template-columns:repeat(3,1fr);}
+.grid.cols-4{grid-template-columns:repeat(4,1fr);}
+@media (max-width:1000px){
+  .grid.cols-3,.grid.cols-4{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:640px){
+  .grid.cols-2,.grid.cols-3,.grid.cols-4{grid-template-columns:1fr;}
+}
+
+/* mobile nav */
+#mobile-topbar{display:none;}
+@media (max-width:860px){
+  #sidebar{display:none;}
+  #mobile-topbar{
+    display:flex;align-items:center;gap:6px;overflow-x:auto;
+    background:var(--paper-2);border-bottom:1.5px dashed var(--line);
+    padding:10px 12px;position:sticky;top:0;z-index:50;
+  }
+  #mobile-topbar .brand{font-family:var(--font-hand);color:var(--rose);font-size:22px;margin-right:8px;flex-shrink:0;}
+  #mobile-topbar .nav-item{flex-shrink:0;font-size:12px;padding:8px 10px;}
+  #content{padding:16px 14px 110px;}
+  #app{flex-direction:column;}
+}
+
+/* polaroid */
+.polaroid{
+  background:#fff;padding:10px 10px 34px;box-shadow:var(--shadow-sm);
+  border-radius:4px; display:inline-block;
+}
+.polaroid img{border-radius:2px;}
+.polaroid .cap{font-family:var(--font-hand);text-align:center;margin-top:8px;color:#444;font-size:16px;}
+
+/* toast */
+#toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--paper);padding:10px 20px;border-radius:999px;
+  font-size:13.5px;font-weight:600;opacity:0;pointer-events:none;transition:all .25s ease;z-index:999;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* modal */
+.modal-backdrop{
+  position:fixed;inset:0;background:rgba(60,40,40,0.35);backdrop-filter:blur(2px);
+  display:flex;align-items:center;justify-content:center;z-index:200;padding:20px;
+}
+.modal{
+  background:var(--card);border-radius:var(--radius);padding:24px;max-width:480px;width:100%;
+  box-shadow:var(--shadow);max-height:85vh;overflow-y:auto;position:relative;
+}
+.modal-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:20px;color:var(--ink-soft);}
+
+input[type=text],input[type=date],input[type=number],input[type=url],textarea,select{
+  width:100%;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);
+  background:var(--paper);color:var(--ink);font-size:14px;margin-bottom:10px;
+}
+textarea{resize:vertical;min-height:80px;}
+label.field-label{font-size:12.5px;font-weight:700;color:var(--ink-soft);display:block;margin-bottom:4px;}
+
+/* fab */
+.fab{
+  position:fixed;bottom:26px;right:26px;z-index:80;
+  width:64px;height:64px;border-radius:50%;background:var(--rose);color:#fff;
+  border:none;font-size:26px;box-shadow:var(--shadow);
+}
+.fab:hover{transform:scale(1.06) rotate(-4deg);}
+@media (max-width:860px){.fab{bottom:80px;right:16px;width:56px;height:56px;}}
+
+/* sticker drawer */
+#sticker-drawer{
+  position:fixed;top:0;right:-320px;width:300px;height:100%;background:var(--paper-2);
+  border-left:1.5px dashed var(--line);box-shadow:var(--shadow);z-index:150;
+  transition:right .25s ease;padding:16px;overflow-y:auto;
+}
+#sticker-drawer.open{right:0;}
+.drawer-sticker{
+  display:inline-block;width:70px;height:70px;margin:4px;position:relative;
+  border-radius:10px;background:var(--card);padding:4px;text-align:center;
+}
+.drawer-sticker img{width:100%;height:44px;object-fit:contain;}
+.drawer-sticker .lbl{font-size:9px;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.drawer-sticker .add-btn{
+  position:absolute;top:-6px;right:-6px;background:var(--sage-deep);color:#fff;border:none;
+  border-radius:50%;width:20px;height:20px;font-size:12px;line-height:1;
+}
+
+/* board / canvas */
+.board-toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;align-items:center;}
+.board-wrap{overflow:auto;border-radius:var(--radius);border:1.5px dashed var(--line);background:var(--paper-2);}
+.board-canvas{position:relative;width:1600px;height:1000px;background-size:24px 24px;
+  background-image:radial-gradient(circle,rgba(150,110,90,0.08) 1px, transparent 1px);}
+.board-obj{position:absolute;cursor:grab;user-select:none;touch-action:none;}
+.board-obj.selected{outline:2px dashed var(--rose);outline-offset:4px;}
+.board-obj:active{cursor:grabbing;}
+.obj-inner{width:100%;height:100%;}
+.obj-text{background:transparent;padding:6px;min-width:60px;min-height:24px;outline:none;font-size:20px;}
+.obj-note{background:var(--butter);padding:14px;border-radius:6px;box-shadow:var(--shadow-sm);min-width:120px;min-height:100px;outline:none;font-family:var(--font-hand);font-size:19px;}
+.obj-photo img,.obj-sticker img{width:100%;height:100%;object-fit:contain;pointer-events:none;}
+.obj-shape{width:100%;height:100%;}
+.resize-handle{position:absolute;bottom:-8px;right:-8px;width:18px;height:18px;background:var(--rose);border-radius:50%;border:2px solid #fff;cursor:nwse-resize;}
+.rotate-handle{position:absolute;top:-26px;left:50%;transform:translateX(-50%);width:16px;height:16px;background:var(--lavender-deep);border-radius:50%;border:2px solid #fff;cursor:grab;}
+.obj-toolbar{position:absolute;top:-42px;left:0;display:flex;gap:4px;background:var(--ink);padding:4px 6px;border-radius:10px;z-index:5;}
+.obj-toolbar button{background:none;border:none;color:#fff;font-size:13px;padding:2px 5px;}
+.obj-toolbar button:hover{background:rgba(255,255,255,0.15);border-radius:6px;}
+
+/* mood buttons */
+.mood-row{display:flex;gap:8px;flex-wrap:wrap;}
+.mood-btn{border:2px solid transparent;background:var(--paper-2);border-radius:14px;padding:8px 10px;font-size:22px;}
+.mood-btn.active{border-color:var(--rose);background:var(--pink);}
+
+/* music */
+#mini-player{
+  position:fixed;bottom:0;left:220px;right:0;background:var(--card);border-top:1.5px dashed var(--line);
+  padding:10px 20px;display:flex;align-items:center;gap:14px;z-index:60;box-shadow:0 -6px 16px rgba(0,0,0,0.06);
+  transform:translateY(100%);transition:transform .3s ease;
+}
+#mini-player.show{transform:translateY(0);}
+@media (max-width:860px){#mini-player{left:0;bottom:0;flex-wrap:wrap;}}
+#mini-player .cover{width:44px;height:44px;border-radius:10px;object-fit:cover;background:var(--pink);flex-shrink:0;}
+#mini-player .info{min-width:0;}
+#mini-player .info .t{font-weight:700;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px;}
+#mini-player .info .a{font-size:11.5px;color:var(--ink-soft);}
+#mini-player .controls{display:flex;gap:6px;align-items:center;}
+#mini-player .controls button{background:none;border:none;font-size:18px;color:var(--ink);}
+#mini-player .seek{flex:1;min-width:100px;}
+#mini-player input[type=range]{width:100%;margin:0;accent-color:var(--rose);}
+
+.empty-state{text-align:center;padding:50px 20px;color:var(--ink-soft);}
+.empty-state .big{font-size:44px;margin-bottom:10px;}
+
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.calendar .cell{aspect-ratio:1;border-radius:10px;background:var(--paper-2);display:flex;align-items:center;justify-content:center;font-size:12.5px;position:relative;cursor:pointer;}
+.calendar .cell.has-entry{background:var(--pink);font-weight:700;}
+.calendar .cell.today{outline:2px solid var(--rose);}
+.calendar .cell.blank{background:transparent;cursor:default;}
+
+.search-overlay{position:fixed;inset:0;background:rgba(40,30,30,0.4);z-index:300;display:flex;align-items:flex-start;justify-content:center;padding-top:80px;}
+.search-box{background:var(--card);width:100%;max-width:560px;border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);max-height:70vh;overflow-y:auto;}
+.search-result{padding:8px 10px;border-radius:10px;}
+.search-result:hover{background:var(--pink);}
+
+.tag-list{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0;}
+
+/* small util */
+.row{display:flex;gap:10px;align-items:center;}
+.between{justify-content:space-between;}
+.wrap{flex-wrap:wrap;}
+.muted{color:var(--ink-soft);}
+.center{text-align:center;}
+a{color:var(--rose);}
+hr.dashed{border:none;border-top:1.5px dashed var(--line);margin:16px 0;}
+</style>
+</head>
+<body>
+
+<div id="mobile-topbar"></div>
+
+<div id="app">
+  <nav id="sidebar"></nav>
+  <main id="content"></main>
+</div>
+
+<button class="fab" id="bored-fab" title="I'm bored">🎲</button>
+<div id="mini-player"></div>
+<div id="sticker-drawer"></div>
+<div id="toast"></div>
+<div id="modal-root"></div>
+
+<script>
+/* =========================================================
+   UTILITIES
+========================================================= */
+function uid(){ return (crypto.randomUUID ? crypto.randomUUID() : 'id-'+Date.now()+'-'+Math.random().toString(16).slice(2)); }
+function todayStr(){ const d=new Date(); return d.toISOString().slice(0,10); }
+function fmtDate(str){
+  if(!str) return '';
+  const d = new Date(str+'T00:00:00');
+  return d.toLocaleDateString(undefined,{weekday:'short',year:'numeric',month:'short',day:'numeric'});
+}
+function fmtShort(str){
+  const d = new Date(str+'T00:00:00');
+  return d.toLocaleDateString(undefined,{month:'short',day:'numeric'});
+}
+function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+function debounce(fn, ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
+function toast(msg){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(()=>el.classList.remove('show'), 2200);
+}
+function fileToDataURL(file){
+  return new Promise((resolve,reject)=>{
+    const r = new FileReader();
+    r.onload = ()=>resolve(r.result);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+function openModal(html){
+  const root = document.getElementById('modal-root');
+  root.innerHTML = `<div class="modal-backdrop" id="modal-backdrop"><div class="modal">
+    <button class="modal-close" data-close-modal>✕</button>${html}</div></div>`;
+  root.querySelector('#modal-backdrop').addEventListener('click', e=>{ if(e.target.id==='modal-backdrop') closeModal(); });
+  root.querySelector('[data-close-modal]').addEventListener('click', closeModal);
+}
+function closeModal(){ document.getElementById('modal-root').innerHTML=''; }
+
+/* =========================================================
+   INDEXEDDB LAYER
+========================================================= */
+const DB_NAME='myWorldDB', DB_VERSION=1;
+const STORES=['journal','letters','stickers','music','playlists','memories','outfits','outfitBoards','deskCanvases','scrapbookPages','brainNotes','wishlist','lifeMap','moods','meta'];
+const dbPromise = new Promise((resolve,reject)=>{
+  const req = indexedDB.open(DB_NAME, DB_VERSION);
+  req.onupgradeneeded = e=>{
+    const db = e.target.result;
+    STORES.forEach(name=>{ if(!db.objectStoreNames.contains(name)) db.createObjectStore(name,{keyPath:'id'}); });
+  };
+  req.onsuccess = e=>resolve(e.target.result);
+  req.onerror = e=>{ console.error('DB error', e); reject(e); };
+});
+async function dbGetAll(store){
+  const db = await dbPromise;
+  return new Promise((res,rej)=>{
+    const tx = db.transaction(store,'readonly');
+    const r = tx.objectStore(store).getAll();
+    r.onsuccess=()=>res(r.result || []);
+    r.onerror=()=>rej(r.error);
+  });
+}
+async function dbGet(store,id){
+  const db = await dbPromise;
+  return new Promise((res,rej)=>{
+    const tx = db.transaction(store,'readonly');
+    const r = tx.objectStore(store).get(id);
+    r.onsuccess=()=>res(r.result || null);
+    r.onerror=()=>rej(r.error);
+  });
+}
+async function dbPut(store,obj){
+  const db = await dbPromise;
+  return new Promise((res,rej)=>{
+    const tx = db.transaction(store,'readwrite');
+    tx.objectStore(store).put(obj);
+    tx.oncomplete=()=>res(obj);
+    tx.onerror=()=>rej(tx.error);
+  });
+}
+async function dbDelete(store,id){
+  const db = await dbPromise;
+  return new Promise((res,rej)=>{
+    const tx = db.transaction(store,'readwrite');
+    tx.objectStore(store).delete(id);
+    tx.oncomplete=()=>res();
+    tx.onerror=()=>rej(tx.error);
+  });
+}
+async function getMeta(){ return (await dbGet('meta','settings')) || {id:'settings'}; }
+async function setMeta(patch){ const m = await getMeta(); Object.assign(m, patch); await dbPut('meta', m); return m; }
+
+/* =========================================================
+   APP SHELL / ROUTER
+========================================================= */
+const ROOMS = [
+  {id:'home', icon:'🏠', label:'Home'},
+  {id:'journal', icon:'📔', label:'Journal'},
+  {id:'desk', icon:'🖼️', label:'My Desk'},
+  {id:'stickers', icon:'✨', label:'Stickers'},
+  {id:'music', icon:'🎧', label:'Music'},
+  {id:'memories', icon:'📸', label:'Memories'},
+  {id:'outfits', icon:'👗', label:'Outfit Inspo'},
+  {id:'scrapbook', icon:'📎', label:'Scrapbook'},
+  {id:'brain', icon:'🧠', label:'My Brain'},
+  {id:'wishlist', icon:'🎁', label:'Wishlist'},
+  {id:'games', icon:'🎮', label:'Games'},
+  {id:'lifemap', icon:'🗺️', label:'Life Map'},
+];
+
+function currentRoute(){
+  const hash = location.hash.replace('#/','') || 'home';
+  const [room, ...rest] = hash.split('/');
+  return {room: room || 'home', param: rest.join('/')};
+}
+
+function renderNav(){
+  const {room} = currentRoute();
+  const navHtml = ROOMS.map(r=>`<a class="nav-item ${r.id===room?'active':''}" href="#/${r.id}"><span class="emoji">${r.icon}</span>${r.label}</a>`).join('');
+  document.getElementById('sidebar').innerHTML = `<div class="brand">my little world ♡</div>${navHtml}
+    <div id="sidebar-bottom">
+      <button class="btn soft small" id="theme-toggle" title="toggle theme">🌙/☀️</button>
+      <button class="btn soft small" id="search-open" title="search">🔍</button>
+      <button class="btn soft small" id="stickers-toggle" title="sticker drawer">✨</button>
+    </div>`;
+  document.getElementById('mobile-topbar').innerHTML = `<span class="brand">✿</span>${navHtml}
+    <button class="btn soft small" id="theme-toggle-m">🌙</button>
+    <button class="btn soft small" id="search-open-m">🔍</button>`;
+  bindTopControls();
+}
+function bindTopControls(){
+  const t1=document.getElementById('theme-toggle'), t2=document.getElementById('theme-toggle-m');
+  [t1,t2].forEach(b=> b && b.addEventListener('click', toggleTheme));
+  const s1=document.getElementById('search-open'), s2=document.getElementById('search-open-m');
+  [s1,s2].forEach(b=> b && b.addEventListener('click', openSearch));
+  const st = document.getElementById('stickers-toggle');
+  st && st.addEventListener('click', ()=>toggleDrawer());
+}
+function toggleTheme(){
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur==='dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  try{ localStorage.setItem('myworld-theme', next); }catch(e){}
+}
+(function initTheme(){
+  try{
+    const saved = localStorage.getItem('myworld-theme');
+    if(saved) document.documentElement.setAttribute('data-theme', saved);
+  }catch(e){}
+})();
+
+const ROUTE_RENDERERS = {};
+function registerRoom(id, fn){ ROUTE_RENDERERS[id] = fn; }
+
+async function renderRoute(){
+  renderNav();
+  const {room, param} = currentRoute();
+  const container = document.getElementById('content');
+  container.innerHTML = '<div class="empty-state">loading your world… 🌸</div>';
+  activeBoard = null;
+  if(window.__gameCleanup && room!=='games'){ window.__gameCleanup(); window.__gameCleanup = null; }
+  const fn = ROUTE_RENDERERS[room] || ROUTE_RENDERERS['home'];
+  try{
+    await fn(container, param);
+  }catch(err){
+    console.error(err);
+    container.innerHTML = `<div class="empty-state"><div class="big">🫧</div>something went a little wobbly loading this room.<br><span class="muted">${escapeHtml(err.message||'')}</span></div>`;
+  }
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange', renderRoute);
+
+/* =========================================================
+   HOME
+========================================================= */
+const MOODS = ['🥰','😊','😌','🥱','😐','😢','😤','😴','🤒','🥳'];
+function greetingWord(){
+  const h = new Date().getHours();
+  if(h<12) return 'good morning';
+  if(h<18) return 'good afternoon';
+  return 'good night';
+}
+const BORED_SUGGESTIONS = {
+  '2 minutes':['Write one thought in your journal.','Pick today\'s mood.','Add a sticker to your desk.'],
+  '5 minutes':['Decorate a scrapbook page.','Brain dump something on your mind.','Reorganize a sticker category.'],
+  '10 minutes':['Create an outfit board.','Add a memory from today.','Build a tiny moodboard on My Desk.'],
+  '15 minutes':['Look through your memories timeline.','Write a letter to your future self.','Make a new playlist.'],
+  '20 minutes':['Play a game in the playground.','Add three things to your wishlist.','Doodle in the coloring room.'],
+  '30 minutes':['Make a brand new moodboard.','Start a new My Desk canvas.','Fill in your Life Map with a memory.'],
+};
+function randomBoredSuggestion(){
+  const keys = Object.keys(BORED_SUGGESTIONS);
+  const k = keys[Math.floor(Math.random()*keys.length)];
+  const list = BORED_SUGGESTIONS[k];
+  const s = list[Math.floor(Math.random()*list.length)];
+  return {time:k, text:s};
+}
+function showBoredModal(){
+  const {time, text} = randomBoredSuggestion();
+  openModal(`
+    <div class="center">
+      <div style="font-size:44px;">🎲</div>
+      <h2 class="hand" style="font-size:30px;margin:6px 0;">bored? let's fix that</h2>
+      <p class="chip">${time}</p>
+      <p style="font-size:19px;margin:14px 0;" class="hand">${escapeHtml(text)}</p>
+      <button class="btn" id="bored-again">🔁 give me another</button>
+    </div>
+  `);
+  document.getElementById('bored-again').addEventListener('click', showBoredModal);
+}
+document.getElementById('bored-fab').addEventListener('click', showBoredModal);
+
+async function renderHome(container){
+  const today = todayStr();
+  const [moodRec, allJournal, allMemories, meta] = await Promise.all([
+    dbGet('moods', today), dbGetAll('journal'), dbGetAll('memories'), getMeta()
+  ]);
+  const recentMemories = allMemories.sort((a,b)=> (b.createdAt||0)-(a.createdAt||0)).slice(0,3);
+  const todaysEntries = allJournal.filter(j=>j.date===today);
+  const currentSong = meta.currentSongId ? await dbGet('music', meta.currentSongId) : null;
+
+  container.innerHTML = `
+    <h1 class="page-title">${greetingWord()} ♡</h1>
+    <p class="page-sub">welcome back — here's your little world today.</p>
+
+    <div class="grid cols-3">
+      <div class="card" style="grid-column:span 2;">
+        <div class="tape"></div>
+        <div class="row between">
+          <div>
+            <div style="font-size:13px;" class="muted">TODAY</div>
+            <div class="hand" style="font-size:26px;">${fmtDate(today)}</div>
+          </div>
+          <div>
+            <div style="font-size:13px;" class="muted">MOOD</div>
+            <div style="font-size:26px;">${moodRec ? moodRec.mood : '·'}</div>
+          </div>
+        </div>
+        <hr class="dashed">
+        <div style="font-size:13px;" class="muted">HOW ARE YOU FEELING RIGHT NOW?</div>
+        <div class="mood-row" id="home-mood-row">
+          ${MOODS.map(m=>`<button class="mood-btn ${moodRec&&moodRec.mood===m?'active':''}" data-mood="${m}">${m}</button>`).join('')}
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-size:13px;" class="muted">CURRENTLY PLAYING</div>
+        ${currentSong ? `
+          <div class="row" style="margin-top:8px;">
+            <img class="cover" src="${currentSong.cover||''}" style="width:52px;height:52px;border-radius:12px;object-fit:cover;background:var(--pink);">
+            <div>
+              <div style="font-weight:700;font-size:14px;">${escapeHtml(currentSong.title)}</div>
+              <div class="muted" style="font-size:12px;">${escapeHtml(currentSong.artist||'')}</div>
+            </div>
+          </div>
+          <button class="btn small secondary" style="margin-top:10px;" id="home-play">▶ play</button>
+        ` : `<p class="muted" style="font-size:13.5px;margin-top:6px;">nothing playing — <a href="#/music">pick a song</a> 🎧</p>`}
+      </div>
+    </div>
+
+    <div class="grid cols-2" style="margin-top:16px;">
+      <div class="card">
+        <div style="font-size:13px;" class="muted">TODAY'S THOUGHT</div>
+        <textarea id="home-quick-journal" placeholder="what's on your mind today...">${todaysEntries[0]?todaysEntries[0].text||'':''}</textarea>
+        <button class="btn small" id="home-save-journal">save to journal ✎</button>
+      </div>
+      <div class="card">
+        <div style="font-size:13px;" class="muted">RECENTLY ADDED MEMORIES</div>
+        <div class="row wrap" style="margin-top:10px;">
+          ${recentMemories.length ? recentMemories.map(m=>`
+            <div class="polaroid" style="width:100px;">
+              ${m.type==='photo'||m.type==='video' ? `<img src="${m.src}" style="width:80px;height:80px;object-fit:cover;">` : `<div style="width:80px;height:80px;display:flex;align-items:center;justify-content:center;font-size:26px;background:var(--paper-2);">📝</div>`}
+              <div class="cap" style="font-size:12px;">${fmtShort(m.date||today)}</div>
+            </div>`).join('') : `<p class="muted" style="font-size:13px;">no memories yet — <a href="#/memories">add one</a></p>`}
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="hand" style="font-size:24px;margin-bottom:10px;">what do you feel like doing?</div>
+      <div class="grid cols-4" id="home-links">
+        <a class="btn soft" href="#/journal">📖 Journal</a>
+        <a class="btn soft" href="#/desk">🎨 Decorate</a>
+        <a class="btn soft" href="#/music">🎧 Listen</a>
+        <a class="btn soft" href="#/outfits">👗 Make an outfit</a>
+        <a class="btn soft" href="#/memories">📸 Memories</a>
+        <a class="btn soft" href="#/games">🎮 Play</a>
+        <a class="btn soft" href="#/brain">🧠 Brain dump</a>
+        <a class="btn soft" href="#/scrapbook">📎 Scrapbook</a>
+      </div>
+      <div class="center" style="margin-top:18px;">
+        <button class="btn" id="home-bored">🎲 I'm bored</button>
+      </div>
+    </div>
+  `;
+
+  container.querySelectorAll('#home-mood-row .mood-btn').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      await dbPut('moods', {id:today, date:today, mood:btn.dataset.mood});
+      renderHome(container);
+      toast('mood saved ♡');
+    });
+  });
+  const playBtn = document.getElementById('home-play');
+  playBtn && playBtn.addEventListener('click', ()=> playSong(currentSong.id));
+  document.getElementById('home-save-journal').addEventListener('click', async ()=>{
+    const text = document.getElementById('home-quick-journal').value;
+    let entry = todaysEntries[0];
+    if(entry){ entry.text = text; }
+    else { entry = {id:uid(), date:today, title:'', mood:moodRec?moodRec.mood:'', text, photos:[], stickers:[], tags:[], favorite:false, createdAt:Date.now()}; }
+    await dbPut('journal', entry);
+    toast('saved to your journal ♡');
+  });
+  document.getElementById('home-bored').addEventListener('click', showBoredModal);
+}
+registerRoom('home', renderHome);
+
+/* =========================================================
+   JOURNAL
+========================================================= */
+const JOURNAL_PROMPTS = [
+  'What am I feeling today?','What happened today?','What is currently on my mind?',
+  'What do I want future me to remember?','What made me smile today?'
+];
+let journalState = {tab:'entries', search:'', moodFilter:'', tagFilter:'', calMonth:new Date().getMonth(), calYear:new Date().getFullYear()};
+
+async function renderJournal(container, param){
+  if(param && param.startsWith('entry/')) return renderJournalEditor(container, param.split('/')[1]);
+  const entries = (await dbGetAll('journal')).sort((a,b)=> (b.date||'').localeCompare(a.date||'') || (b.createdAt||0)-(a.createdAt||0));
+
+  container.innerHTML = `
+    <h1 class="page-title">journal</h1>
+    <p class="page-sub">a private place for everything you're feeling.</p>
+    <div class="row wrap" style="margin-bottom:16px;">
+      <button class="btn ${journalState.tab==='entries'?'':'soft'}" data-jtab="entries">📖 Entries</button>
+      <button class="btn ${journalState.tab==='calendar'?'':'soft'}" data-jtab="calendar">🗓️ Calendar</button>
+      <button class="btn ${journalState.tab==='brain'?'':'soft'}" data-jtab="brain">🌀 Brain Dump</button>
+      <button class="btn ${journalState.tab==='letters'?'':'soft'}" data-jtab="letters">💌 Letters to Future Me</button>
+      <button class="btn secondary" id="new-entry-btn" style="margin-left:auto;">+ new entry</button>
+    </div>
+    <div id="journal-body"></div>
+  `;
+  container.querySelectorAll('[data-jtab]').forEach(b=> b.addEventListener('click', ()=>{ journalState.tab=b.dataset.jtab; renderJournal(container); }));
+  document.getElementById('new-entry-btn').addEventListener('click', ()=> location.hash = '#/journal/entry/new');
+
+  const body = document.getElementById('journal-body');
+  if(journalState.tab==='entries'){
+    const allTags = [...new Set(entries.flatMap(e=>e.tags||[]))];
+    let filtered = entries.filter(e=>{
+      if(journalState.search && !( (e.title+' '+e.text).toLowerCase().includes(journalState.search.toLowerCase()) )) return false;
+      if(journalState.moodFilter && e.mood!==journalState.moodFilter) return false;
+      if(journalState.tagFilter && !(e.tags||[]).includes(journalState.tagFilter)) return false;
+      return true;
+    });
+    body.innerHTML = `
+      <div class="card" style="margin-bottom:16px;">
+        <div class="row wrap">
+          <input type="text" placeholder="search entries..." id="j-search" value="${escapeHtml(journalState.search)}" style="max-width:220px;margin:0;">
+          <select id="j-mood-filter" style="max-width:120px;margin:0;">
+            <option value="">all moods</option>
+            ${MOODS.map(m=>`<option ${journalState.moodFilter===m?'selected':''}>${m}</option>`).join('')}
+          </select>
+          <select id="j-tag-filter" style="max-width:150px;margin:0;">
+            <option value="">all tags</option>
+            ${allTags.map(t=>`<option ${journalState.tagFilter===t?'selected':''}>${escapeHtml(t)}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="grid cols-3" id="entries-grid">
+        ${filtered.length? filtered.map(entryCardHtml).join('') : `<div class="empty-state" style="grid-column:1/-1;"><div class="big">📔</div>no entries yet. write your first thought!<br><span class="muted hand" style="font-size:18px;">"${JOURNAL_PROMPTS[Math.floor(Math.random()*JOURNAL_PROMPTS.length)]}"</span></div>`}
+      </div>
+    `;
+    document.getElementById('j-search').addEventListener('input', e=>{ journalState.search=e.target.value; renderJournal(container); });
+    document.getElementById('j-mood-filter').addEventListener('change', e=>{ journalState.moodFilter=e.target.value; renderJournal(container); });
+    document.getElementById('j-tag-filter').addEventListener('change', e=>{ journalState.tagFilter=e.target.value; renderJournal(container); });
+    body.querySelectorAll('[data-open-entry]').forEach(el=> el.addEventListener('click', ()=> location.hash='#/journal/entry/'+el.dataset.openEntry));
+    body.querySelectorAll('[data-fav-entry]').forEach(el=> el.addEventListener('click', async (e)=>{
+      e.stopPropagation();
+      const en = entries.find(x=>x.id===el.dataset.favEntry); en.favorite=!en.favorite; await dbPut('journal',en); renderJournal(container);
+    }));
+  } else if(journalState.tab==='calendar'){
+    renderJournalCalendar(body, entries, container);
+  } else if(journalState.tab==='brain'){
+    renderBrainDump(body);
+  } else if(journalState.tab==='letters'){
+    renderLetters(body);
+  }
+}
+function entryCardHtml(e){
+  return `<div class="card" data-open-entry="${e.id}" style="cursor:pointer;">
+    <div class="row between">
+      <span style="font-size:22px;">${e.mood||'📝'}</span>
+      <button class="btn icon small soft" data-fav-entry="${e.id}" title="favorite">${e.favorite?'💗':'🤍'}</button>
+    </div>
+    <div class="hand" style="font-size:20px;margin:4px 0 0;">${escapeHtml(e.title)||'untitled'}</div>
+    <div class="muted" style="font-size:12px;">${fmtShort(e.date)}</div>
+    <p style="font-size:13.5px;margin:8px 0 0;max-height:60px;overflow:hidden;">${escapeHtml((e.text||'').slice(0,120))}</p>
+    ${e.photos&&e.photos.length? `<img src="${e.photos[0]}" style="margin-top:8px;border-radius:10px;height:80px;width:100%;object-fit:cover;">`:''}
+    <div class="tag-list">${(e.tags||[]).slice(0,3).map(t=>`<span class="chip">${escapeHtml(t)}</span>`).join('')}</div>
+  </div>`;
+}
+function renderJournalCalendar(body, entries, container){
+  const y=journalState.calYear, m=journalState.calMonth;
+  const first = new Date(y,m,1); const startDow = first.getDay(); const days = new Date(y,m+1,0).getDate();
+  const byDate = {}; entries.forEach(e=>{ (byDate[e.date]=byDate[e.date]||[]).push(e); });
+  let cells='';
+  for(let i=0;i<startDow;i++) cells += `<div class="cell blank"></div>`;
+  for(let d=1; d<=days; d++){
+    const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const has = byDate[dateStr];
+    cells += `<div class="cell ${has?'has-entry':''} ${dateStr===todayStr()?'today':''}" data-date="${dateStr}">${d}</div>`;
+  }
+  body.innerHTML = `
+    <div class="card">
+      <div class="row between" style="margin-bottom:12px;">
+        <button class="btn small soft" id="cal-prev">←</button>
+        <div class="hand" style="font-size:22px;">${new Date(y,m).toLocaleDateString(undefined,{month:'long',year:'numeric'})}</div>
+        <button class="btn small soft" id="cal-next">→</button>
+      </div>
+      <div class="calendar">${cells}</div>
+    </div>
+    <div id="cal-day-entries" style="margin-top:16px;"></div>
+  `;
+  document.getElementById('cal-prev').addEventListener('click', ()=>{ journalState.calMonth--; if(journalState.calMonth<0){journalState.calMonth=11;journalState.calYear--;} renderJournal(container); });
+  document.getElementById('cal-next').addEventListener('click', ()=>{ journalState.calMonth++; if(journalState.calMonth>11){journalState.calMonth=0;journalState.calYear++;} renderJournal(container); });
+  body.querySelectorAll('.cell[data-date]').forEach(c=> c.addEventListener('click', ()=>{
+    const list = byDate[c.dataset.date] || [];
+    document.getElementById('cal-day-entries').innerHTML = list.length ? `<div class="grid cols-3">${list.map(entryCardHtml).join('')}</div>` :
+      `<div class="empty-state">nothing saved on ${fmtShort(c.dataset.date)} yet.</div>`;
+    document.querySelectorAll('#cal-day-entries [data-open-entry]').forEach(el=> el.addEventListener('click', ()=> location.hash='#/journal/entry/'+el.dataset.openEntry));
+  }));
+}
+async function renderBrainDump(body){
+  const dumps = (await dbGetAll('journal')).filter(e=>e.isBrainDump).sort((a,b)=>b.createdAt-a.createdAt);
+  body.innerHTML = `
+    <div class="card">
+      <div class="hand" style="font-size:22px;">brain dump 🌀</div>
+      <p class="muted" style="font-size:13px;">a place to write random thoughts without organizing them.</p>
+      <textarea id="brain-dump-text" placeholder="just start typing..."></textarea>
+      <button class="btn small" id="brain-dump-save">dump it ✎</button>
+    </div>
+    <div class="grid cols-3" style="margin-top:16px;">
+      ${dumps.map(d=>`<div class="card"><div class="muted" style="font-size:11px;">${new Date(d.createdAt).toLocaleString()}</div><p style="font-size:14px;">${escapeHtml(d.text)}</p></div>`).join('')}
+    </div>
+  `;
+  document.getElementById('brain-dump-save').addEventListener('click', async ()=>{
+    const text = document.getElementById('brain-dump-text').value.trim();
+    if(!text) return;
+    await dbPut('journal', {id:uid(), isBrainDump:true, text, date:todayStr(), createdAt:Date.now(), tags:[], photos:[], stickers:[]});
+    renderBrainDump(body);
+    toast('dumped ♡');
+  });
+}
+async function renderLetters(body){
+  const letters = (await dbGetAll('letters')).sort((a,b)=>b.createdAt-a.createdAt);
+  body.innerHTML = `
+    <div class="card">
+      <div class="hand" style="font-size:22px;">letters to future me 💌</div>
+      <textarea id="letter-text" placeholder="dear future me..."></textarea>
+      <label class="field-label">unlock when?</label>
+      <select id="letter-when">
+        <option value="1m">1 month</option><option value="6m">6 months</option>
+        <option value="1y">1 year</option><option value="custom">custom date</option>
+      </select>
+      <input type="date" id="letter-custom-date" style="display:none;">
+      <button class="btn small" id="letter-save">seal it ✉️</button>
+    </div>
+    <div class="grid cols-3" style="margin-top:16px;">
+      ${letters.map(l=>{
+        const unlocked = new Date(l.unlockDate) <= new Date();
+        return `<div class="card">
+          <div class="row between"><span>${unlocked?'🔓':'🔒'}</span><span class="muted" style="font-size:11px;">unlocks ${l.unlockDate}</span></div>
+          ${unlocked ? `<p style="font-size:14px;margin-top:8px;">${escapeHtml(l.text)}</p>` : `<p class="muted" style="margin-top:8px;">sealed until then ♡</p>`}
+        </div>`;
+      }).join('') || '<p class="muted">no letters yet.</p>'}
+    </div>
+  `;
+  const whenSel = document.getElementById('letter-when');
+  whenSel.addEventListener('change', ()=>{ document.getElementById('letter-custom-date').style.display = whenSel.value==='custom'?'block':'none'; });
+  document.getElementById('letter-save').addEventListener('click', async ()=>{
+    const text = document.getElementById('letter-text').value.trim();
+    if(!text) return;
+    let unlockDate;
+    const now = new Date();
+    if(whenSel.value==='1m'){ now.setMonth(now.getMonth()+1); unlockDate=now.toISOString().slice(0,10); }
+    else if(whenSel.value==='6m'){ now.setMonth(now.getMonth()+6); unlockDate=now.toISOString().slice(0,10); }
+    else if(whenSel.value==='1y'){ now.setFullYear(now.getFullYear()+1); unlockDate=now.toISOString().slice(0,10); }
+    else unlockDate = document.getElementById('letter-custom-date').value || todayStr();
+    await dbPut('letters', {id:uid(), text, unlockDate, createdAt:Date.now()});
+    renderLetters(body);
+    toast('letter sealed ♡');
+  });
+}
+
+let journalNewDraft = null;
+async function renderJournalEditor(container, id){
+  const isNew = id==='new';
+  if(isNew && !journalNewDraft){ journalNewDraft = {id:uid(), date:todayStr(), title:'', mood:'', text:'', photos:[], stickers:[], tags:[], favorite:false, songId:null, createdAt:Date.now(), isBrainDump:false}; }
+  let entry = isNew ? journalNewDraft : await dbGet('journal', id);
+  if(entry) entry.__isNew = isNew;
+  if(!entry){ container.innerHTML = '<div class="empty-state">entry not found.</div>'; return; }
+  const songs = await dbGetAll('music');
+  const prompt = JOURNAL_PROMPTS[Math.floor(Math.random()*JOURNAL_PROMPTS.length)];
+
+  container.innerHTML = `
+    <button class="btn soft small" id="back-journal">← back to journal</button>
+    <div class="card" style="margin-top:14px;">
+      <div class="row between wrap">
+        <input type="date" id="e-date" value="${entry.date}" style="max-width:180px;">
+        <div class="mood-row" id="e-mood-row">${MOODS.map(m=>`<button type="button" class="mood-btn ${entry.mood===m?'active':''}" data-mood="${m}">${m}</button>`).join('')}</div>
+      </div>
+      <input type="text" id="e-title" placeholder="give this entry a title..." value="${escapeHtml(entry.title)}" style="font-family:var(--font-hand);font-size:22px;">
+      <p class="muted hand" style="font-size:17px;">✎ ${prompt}</p>
+      <textarea id="e-text" style="min-height:180px;" placeholder="write freely...">${escapeHtml(entry.text)}</textarea>
+      <label class="field-label">tags (comma separated)</label>
+      <input type="text" id="e-tags" value="${(entry.tags||[]).join(', ')}" placeholder="cozy, school, Puntu...">
+      <label class="field-label">attach a song</label>
+      <select id="e-song"><option value="">none</option>${songs.map(s=>`<option value="${s.id}" ${entry.songId===s.id?'selected':''}>${escapeHtml(s.title)}</option>`).join('')}</select>
+      <label class="field-label">photos</label>
+      <input type="file" id="e-photo-upload" accept="image/png,image/jpeg" multiple>
+      <div class="row wrap" id="e-photos">${(entry.photos||[]).map((p,i)=>`<div style="position:relative;"><img src="${p}" style="width:80px;height:80px;object-fit:cover;border-radius:10px;"><button data-rm-photo="${i}" class="btn icon small danger" style="position:absolute;top:-6px;right:-6px;padding:2px 6px;">✕</button></div>`).join('')}</div>
+      <label class="field-label">stickers on this entry</label>
+      <div class="row wrap" id="e-stickers-zone" style="min-height:60px;border:1.5px dashed var(--line);border-radius:12px;padding:8px;">
+        ${(entry.stickers||[]).map((s,i)=>`<div style="position:relative;"><img src="${s.src}" style="width:50px;height:50px;object-fit:contain;"><button data-rm-sticker="${i}" class="btn icon small danger" style="position:absolute;top:-6px;right:-6px;padding:1px 5px;font-size:10px;">✕</button></div>`).join('')}
+      </div>
+      <p class="muted" style="font-size:12px;">open the ✨ sticker drawer and tap a sticker to add it here.</p>
+      <hr class="dashed">
+      <div class="row wrap between">
+        <button class="btn" id="e-save">💾 save entry</button>
+        ${!isNew? `<button class="btn danger" id="e-delete">delete</button>`:''}
+        <button class="btn secondary" id="e-fav">${entry.favorite?'💗 favorited':'🤍 favorite'}</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('back-journal').addEventListener('click', ()=> location.hash='#/journal');
+  container.querySelectorAll('#e-mood-row .mood-btn').forEach(b=> b.addEventListener('click', ()=>{
+    entry.mood = b.dataset.mood;
+    container.querySelectorAll('#e-mood-row .mood-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+  }));
+  document.getElementById('e-photo-upload').addEventListener('change', async (e)=>{
+    for(const f of e.target.files){ entry.photos.push(await fileToDataURL(f)); }
+    renderJournalEditor(container, isNew?'new':id);
+    if(isNew){} // keep unsaved state simple; user should save
+  });
+  if(!container.__journalClickBound){
+    container.addEventListener('click', (e)=>{
+      const ce = window.__currentJournalEntry;
+      if(!ce) return;
+      if(e.target.dataset.rmPhoto!==undefined){ ce.photos.splice(+e.target.dataset.rmPhoto,1); renderJournalEditor(container, ce.__isNew?'new':ce.id); }
+      if(e.target.dataset.rmSticker!==undefined){ ce.stickers.splice(+e.target.dataset.rmSticker,1); renderJournalEditor(container, ce.__isNew?'new':ce.id); }
+    });
+    container.__journalClickBound = true;
+  }
+  function renderJournalEditorKeep(){ renderJournalEditor(container, isNew?'new':id); }
+  document.getElementById('e-fav').addEventListener('click', ()=>{ entry.favorite=!entry.favorite; renderJournalEditorKeep(); });
+  document.getElementById('e-save').addEventListener('click', async ()=>{
+    entry.date = document.getElementById('e-date').value || entry.date;
+    entry.title = document.getElementById('e-title').value;
+    entry.text = document.getElementById('e-text').value;
+    entry.tags = document.getElementById('e-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+    entry.songId = document.getElementById('e-song').value || null;
+    await dbPut('journal', entry);
+    if(isNew) journalNewDraft = null;
+    toast('entry saved ♡');
+    location.hash = '#/journal';
+  });
+  if(!isNew) document.getElementById('e-delete').addEventListener('click', async ()=>{
+    if(confirm('delete this entry forever?')){ await dbDelete('journal', id); location.hash='#/journal'; toast('entry deleted'); }
+  });
+  window.__currentJournalEntry = entry;
+  window.__addStickerToCurrentEntry = async (stickerObj)=>{
+    entry.stickers = entry.stickers || [];
+    entry.stickers.push({src:stickerObj.dataURL, stickerId:stickerObj.id});
+    await dbPut('journal', entry);
+    if(isNew){ journalNewDraft = null; location.hash = '#/journal/entry/'+entry.id; }
+    else renderJournalEditor(container, entry.id);
+  };
+}
+registerRoom('journal', renderJournal);
+
+/* =========================================================
+   STICKERS
+========================================================= */
+let stickerState = {category:'', search:''};
+async function renderStickers(container){
+  const stickers = (await dbGetAll('stickers')).sort((a,b)=>b.createdAt-a.createdAt);
+  const cats = [...new Set(stickers.map(s=>s.category).filter(Boolean))];
+  const filtered = stickers.filter(s=>{
+    if(stickerState.category && s.category!==stickerState.category) return false;
+    if(stickerState.search && !s.name.toLowerCase().includes(stickerState.search.toLowerCase())) return false;
+    return true;
+  });
+  container.innerHTML = `
+    <h1 class="page-title">stickers ✨</h1>
+    <p class="page-sub">upload your own PNGs and JPGs to decorate everything.</p>
+    <div class="card" style="margin-bottom:16px;">
+      <label class="btn">+ upload stickers<input type="file" id="sticker-upload" accept="image/png,image/jpeg" multiple style="display:none;"></label>
+      <div class="row wrap" style="margin-top:12px;">
+        <input type="text" id="sticker-search" placeholder="search stickers..." value="${escapeHtml(stickerState.search)}" style="max-width:200px;margin:0;">
+        <select id="sticker-cat-filter" style="max-width:160px;margin:0;">
+          <option value="">all categories</option>
+          ${['cute','flowers','food','study','random','travel','seasonal',...cats].filter((v,i,a)=>a.indexOf(v)===i).map(c=>`<option ${stickerState.category===c?'selected':''}>${escapeHtml(c)}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+    <div class="grid cols-4" id="sticker-grid">
+      ${filtered.length? filtered.map(s=>`
+        <div class="card" style="text-align:center;">
+          <img src="${s.dataURL}" style="height:70px;object-fit:contain;margin:0 auto;">
+          <div style="font-size:12.5px;font-weight:700;margin-top:6px;">${escapeHtml(s.name)}</div>
+          <div class="chip" style="margin-top:4px;">${escapeHtml(s.category||'uncategorized')}</div>
+          <div class="row" style="justify-content:center;margin-top:8px;">
+            <button class="btn icon small soft" data-fav-sticker="${s.id}">${s.favorite?'💗':'🤍'}</button>
+            <button class="btn icon small danger" data-del-sticker="${s.id}">🗑</button>
+          </div>
+        </div>`).join('') : `<div class="empty-state" style="grid-column:1/-1;"><div class="big">✨</div>upload your first stickers to start decorating!</div>`}
+    </div>
+  `;
+  document.getElementById('sticker-upload').addEventListener('change', async e=>{
+    for(const f of e.target.files){
+      const dataURL = await fileToDataURL(f);
+      await dbPut('stickers', {id:uid(), name:f.name.replace(/\.[^.]+$/,''), category:'', favorite:false, dataURL, createdAt:Date.now()});
+    }
+    renderStickers(container); refreshDrawerIfOpen(); toast('stickers added ♡');
+  });
+  document.getElementById('sticker-search').addEventListener('input', e=>{ stickerState.search=e.target.value; renderStickers(container); });
+  document.getElementById('sticker-cat-filter').addEventListener('change', e=>{ stickerState.category=e.target.value; renderStickers(container); });
+  container.querySelectorAll('[data-fav-sticker]').forEach(b=> b.addEventListener('click', async ()=>{
+    const s = stickers.find(x=>x.id===b.dataset.favSticker); s.favorite=!s.favorite; await dbPut('stickers',s); renderStickers(container);
+  }));
+  container.querySelectorAll('[data-del-sticker]').forEach(b=> b.addEventListener('click', async ()=>{
+    if(confirm('delete this sticker?')){ await dbDelete('stickers', b.dataset.delSticker); renderStickers(container); refreshDrawerIfOpen(); }
+  }));
+}
+registerRoom('stickers', renderStickers);
+
+/* global sticker drawer */
+let drawerBoard = null;
+async function toggleDrawer(boardForDrop){
+  const drawer = document.getElementById('sticker-drawer');
+  drawerBoard = boardForDrop || activeBoard || null;
+  const willOpen = !drawer.classList.contains('open');
+  if(willOpen) await renderDrawer();
+  drawer.classList.toggle('open', willOpen);
+}
+async function refreshDrawerIfOpen(){
+  const drawer = document.getElementById('sticker-drawer');
+  if(drawer.classList.contains('open')) renderDrawer();
+}
+async function renderDrawer(){
+  const drawer = document.getElementById('sticker-drawer');
+  const stickers = (await dbGetAll('stickers')).sort((a,b)=>b.createdAt-a.createdAt);
+  drawer.innerHTML = `
+    <div class="row between"><div class="hand" style="font-size:22px;">sticker drawer</div><button class="btn icon small soft" id="drawer-close">✕</button></div>
+    <p class="muted" style="font-size:12px;">tap ➕ to drop a sticker onto ${drawerBoard? 'this board' : 'a page'}, or drag it (desktop) onto the canvas.</p>
+    <div>${stickers.map(s=>`
+      <div class="drawer-sticker" draggable="true" data-sticker-id="${s.id}">
+        <img src="${s.dataURL}">
+        <div class="lbl">${escapeHtml(s.name)}</div>
+        <button class="add-btn" data-add-sticker="${s.id}">+</button>
+      </div>`).join('') || '<p class="muted">no stickers yet — upload some in the Stickers room ✨</p>'}
+    </div>
+  `;
+  document.getElementById('drawer-close').addEventListener('click', ()=> drawer.classList.remove('open'));
+  drawer.querySelectorAll('[data-add-sticker]').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const s = stickers.find(x=>x.id===btn.dataset.addSticker);
+      if(drawerBoard) drawerBoard.addSticker(s);
+      else if(window.__addStickerToCurrentEntry) window.__addStickerToCurrentEntry(s);
+      else toast('open a board or journal entry first ♡');
+    });
+  });
+  drawer.querySelectorAll('.drawer-sticker').forEach(el=>{
+    el.addEventListener('dragstart', e=> e.dataTransfer.setData('text/sticker-id', el.dataset.stickerId));
+  });
+}
+document.addEventListener('dragover', e=>{ if(e.dataTransfer.types.includes('text/sticker-id')) e.preventDefault(); });
+document.addEventListener('drop', async e=>{
+  if(!e.dataTransfer.types.includes('text/sticker-id')) return;
+  const canvas = e.target.closest('.board-canvas');
+  if(!canvas || !activeBoard) return;
+  e.preventDefault();
+  const id = e.dataTransfer.getData('text/sticker-id');
+  const s = await dbGet('stickers', id); if(!s) return;
+  const rect = canvas.getBoundingClientRect();
+  const obj = activeBoard.addObject('sticker', {src:s.dataURL, stickerId:s.id, w:90,h:90, x:e.clientX-rect.left-45, y:e.clientY-rect.top-45});
+});
+
+/* =========================================================
+   BOARD ENGINE (shared canvas for Desk / Scrapbook / Outfits)
+========================================================= */
+const SHAPES = {
+  circle: 'border-radius:50%;',
+  square: 'border-radius:8px;',
+  heart: "clip-path: path('M50 88 C 10 60, 0 30, 25 12 C 40 2, 50 12, 50 20 C 50 12, 60 2, 75 12 C 100 30, 90 60, 50 88 Z');",
+  star: "clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);"
+};
+class Board{
+  constructor(store, id, mountEl, opts={}){
+    this.store = store; this.id = id; this.mount = mountEl;
+    this.opts = opts;
+    this.selected = null;
+    this.save = debounce(this._save.bind(this), 500);
+  }
+  async load(){
+    this.data = await dbGet(this.store, this.id);
+    if(!this.data){ this.data = {id:this.id, name:this.opts.defaultName||'untitled', background:'paper-2', objects:[], createdAt:Date.now()}; await dbPut(this.store, this.data); }
+    this.render();
+  }
+  async _save(){ this.data.updatedAt = Date.now(); await dbPut(this.store, this.data); }
+  addObject(type, extra={}){
+    const obj = Object.assign({id:uid(), type, x:120+Math.random()*80, y:100+Math.random()*80, w:160, h:120, rot:0, z:this.nextZ()}, extra);
+    this.data.objects.push(obj);
+    this.save(); this.render();
+    return obj;
+  }
+  nextZ(){ return (this.data.objects.reduce((m,o)=>Math.max(m,o.z||0),0)) + 1; }
+  deleteObject(id){ this.data.objects = this.data.objects.filter(o=>o.id!==id); this.selected=null; this.save(); this.render(); }
+  duplicateObject(id){
+    const o = this.data.objects.find(x=>x.id===id); if(!o) return;
+    const copy = Object.assign({}, o, {id:uid(), x:o.x+20, y:o.y+20, z:this.nextZ()});
+    this.data.objects.push(copy); this.save(); this.render();
+  }
+  bringFront(id){ const o=this.data.objects.find(x=>x.id===id); if(o) o.z=this.nextZ(); this.save(); this.render(); }
+  sendBack(id){ const minZ = Math.min(...this.data.objects.map(o=>o.z||0)); const o=this.data.objects.find(x=>x.id===id); if(o) o.z=minZ-1; this.save(); this.render(); }
+
+  render(){
+    this.mount.innerHTML = `
+      <div class="board-toolbar">
+        <input type="text" id="board-name" value="${escapeHtml(this.data.name)}" style="max-width:220px;margin:0;font-family:var(--font-hand);font-size:18px;">
+        <button class="btn small" data-add="text">+ text</button>
+        <button class="btn small" data-add="note">+ sticky note</button>
+        <label class="btn small soft" style="margin:0;">+ photo<input type="file" accept="image/png,image/jpeg" id="board-photo-upload" style="display:none;"></label>
+        <button class="btn small" data-add="shape-circle">+ ● </button>
+        <button class="btn small" data-add="shape-heart">+ ♥</button>
+        <button class="btn small" data-add="shape-star">+ ★</button>
+        <button class="btn small soft" id="board-stickers-btn">✨ stickers</button>
+        <select id="board-bg" style="max-width:130px;margin:0;">
+          ${['paper-2','pink','lavender','sage','butter','sky'].map(c=>`<option value="${c}" ${this.data.background===c?'selected':''}>${c}</option>`).join('')}
+        </select>
+      </div>
+      <div class="board-wrap"><div class="board-canvas" id="board-canvas" style="background-color:var(--${this.data.background||'paper-2'});"></div></div>
+    `;
+    const canvas = this.mount.querySelector('#board-canvas');
+    this.data.objects.slice().sort((a,b)=>(a.z||0)-(b.z||0)).forEach(obj=> canvas.appendChild(this.renderObject(obj)));
+    this.bindToolbar();
+  }
+  bindToolbar(){
+    this.mount.querySelector('#board-name').addEventListener('change', e=>{ this.data.name=e.target.value; this.save(); if(this.opts.onNameChange) this.opts.onNameChange(e.target.value); });
+    this.mount.querySelectorAll('[data-add]').forEach(b=> b.addEventListener('click', ()=>{
+      const kind = b.dataset.add;
+      if(kind==='text') this.addObject('text', {text:'double click to edit', w:180, h:50, color:'ink', font:'clean'});
+      else if(kind==='note') this.addObject('note', {text:'a little note...', w:150, h:130});
+      else if(kind.startsWith('shape-')) this.addObject('shape', {shapeType:kind.split('-')[1], color:'pink-deep', w:90, h:90});
+    }));
+    this.mount.querySelector('#board-photo-upload').addEventListener('change', async e=>{
+      const f = e.target.files[0]; if(!f) return;
+      const src = await fileToDataURL(f);
+      this.addObject('photo', {src, w:180, h:180});
+    });
+    this.mount.querySelector('#board-bg').addEventListener('change', e=>{ this.data.background=e.target.value; this.save(); this.render(); });
+    this.mount.querySelector('#board-stickers-btn').addEventListener('click', ()=> toggleDrawer(this));
+  }
+  renderObject(obj){
+    const div = document.createElement('div');
+    div.className = 'board-obj'+(this.selected===obj.id?' selected':'');
+    div.style.left = obj.x+'px'; div.style.top = obj.y+'px';
+    div.style.width = obj.w+'px'; div.style.height = obj.h+'px';
+    div.style.transform = `rotate(${obj.rot||0}deg)`;
+    div.style.zIndex = obj.z||1;
+    div.dataset.id = obj.id;
+    let inner = '';
+    if(obj.type==='text') inner = `<div class="obj-inner obj-text" contenteditable="true" style="color:var(--${obj.color||'ink'});font-family:${obj.font==='hand'?'var(--font-hand)':'var(--font-body)'};font-size:${obj.font==='hand'?'24px':'16px'};">${escapeHtml(obj.text)}</div>`;
+    else if(obj.type==='note') inner = `<div class="obj-inner obj-note" contenteditable="true">${escapeHtml(obj.text)}</div>`;
+    else if(obj.type==='photo' || obj.type==='sticker') inner = `<div class="obj-inner obj-${obj.type}"><img src="${obj.src}" draggable="false"></div>`;
+    else if(obj.type==='shape') inner = `<div class="obj-inner obj-shape" style="background:var(--${obj.color||'pink-deep'});${SHAPES[obj.shapeType]||''}"></div>`;
+    else if(obj.type==='music') inner = `<div class="obj-inner obj-note" style="background:var(--sky);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;"><span>🎵</span><span style="font-size:12px;">${escapeHtml(obj.title||'song')}</span></div>`;
+    div.innerHTML = `
+      <div class="obj-toolbar" style="display:none;">
+        <button data-act="dup" title="duplicate">⧉</button>
+        <button data-act="front" title="bring front">⬆</button>
+        <button data-act="back" title="send back">⬇</button>
+        <button data-act="del" title="delete">🗑</button>
+      </div>
+      ${inner}
+      <div class="rotate-handle"></div>
+      <div class="resize-handle"></div>
+    `;
+    this.bindObjectEvents(div, obj);
+    return div;
+  }
+  bindObjectEvents(div, obj){
+    const toolbar = div.querySelector('.obj-toolbar');
+    div.addEventListener('pointerdown', (e)=>{
+      if(e.target.closest('.resize-handle') || e.target.closest('.rotate-handle') || e.target.closest('.obj-toolbar')) return;
+      this.selectObj(obj.id);
+      if(e.target.isContentEditable) return;
+      this.startDrag(e, div, obj);
+    });
+    div.querySelectorAll('[data-act]').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        const act = btn.dataset.act;
+        if(act==='dup') this.duplicateObject(obj.id);
+        if(act==='front') this.bringFront(obj.id);
+        if(act==='back') this.sendBack(obj.id);
+        if(act==='del') this.deleteObject(obj.id);
+      });
+    });
+    div.querySelector('.resize-handle').addEventListener('pointerdown', (e)=>{ e.stopPropagation(); this.startResize(e, div, obj); });
+    div.querySelector('.rotate-handle').addEventListener('pointerdown', (e)=>{ e.stopPropagation(); this.startRotate(e, div, obj); });
+    const editable = div.querySelector('[contenteditable]');
+    if(editable){
+      editable.addEventListener('blur', ()=>{ obj.text = editable.innerText; this.save(); });
+      editable.addEventListener('pointerdown', e=> e.stopPropagation());
+    }
+    if(this.selected===obj.id) toolbar.style.display='flex';
+  }
+  selectObj(id){
+    this.selected = id;
+    this.mount.querySelectorAll('.board-obj').forEach(d=>{
+      const on = d.dataset.id===id;
+      d.classList.toggle('selected', on);
+      d.querySelector('.obj-toolbar').style.display = on?'flex':'none';
+    });
+  }
+  startDrag(e, div, obj){
+    const startX=e.clientX, startY=e.clientY, ox=obj.x, oy=obj.y;
+    div.setPointerCapture(e.pointerId);
+    const move = (ev)=>{ obj.x = ox+(ev.clientX-startX); obj.y = oy+(ev.clientY-startY); div.style.left=obj.x+'px'; div.style.top=obj.y+'px'; };
+    const up = ()=>{ document.removeEventListener('pointermove',move); document.removeEventListener('pointerup',up); this.save(); };
+    document.addEventListener('pointermove',move); document.addEventListener('pointerup',up);
+  }
+  startResize(e, div, obj){
+    const startX=e.clientX, startY=e.clientY, ow=obj.w, oh=obj.h;
+    const move=(ev)=>{ obj.w=Math.max(30,ow+(ev.clientX-startX)); obj.h=Math.max(30,oh+(ev.clientY-startY)); div.style.width=obj.w+'px'; div.style.height=obj.h+'px'; };
+    const up=()=>{ document.removeEventListener('pointermove',move); document.removeEventListener('pointerup',up); this.save(); };
+    document.addEventListener('pointermove',move); document.addEventListener('pointerup',up);
+  }
+  startRotate(e, div, obj){
+    const rect = div.getBoundingClientRect(); const cx=rect.left+rect.width/2, cy=rect.top+rect.height/2;
+    const move=(ev)=>{ const angle = Math.atan2(ev.clientY-cy, ev.clientX-cx)*180/Math.PI + 90; obj.rot = Math.round(angle); div.style.transform=`rotate(${obj.rot}deg)`; };
+    const up=()=>{ document.removeEventListener('pointermove',move); document.removeEventListener('pointerup',up); this.save(); };
+    document.addEventListener('pointermove',move); document.addEventListener('pointerup',up);
+  }
+  addSticker(stickerObj){
+    this.addObject('sticker', {src:stickerObj.dataURL, stickerId:stickerObj.id, w:90, h:90});
+  }
+}
+let activeBoard = null; // board instance currently mounted, for sticker-drawer "add" taps
+
+/* =========================================================
+   MUSIC
+========================================================= */
+const audioEl = new Audio();
+let musicQueue = [], musicIndex = -1, shuffleOn=false, repeatOn=false;
+async function playSong(id, queue){
+  const song = await dbGet('music', id);
+  if(!song) return;
+  if(queue) { musicQueue = queue; musicIndex = queue.indexOf(id); }
+  audioEl.src = song.audioDataURL;
+  audioEl.play().catch(()=>{});
+  await setMeta({currentSongId:id});
+  renderMiniPlayer(song);
+}
+function nextSong(){
+  if(!musicQueue.length) return;
+  if(shuffleOn) musicIndex = Math.floor(Math.random()*musicQueue.length);
+  else musicIndex = (musicIndex+1) % musicQueue.length;
+  playSong(musicQueue[musicIndex]);
+}
+function prevSong(){
+  if(!musicQueue.length) return;
+  musicIndex = (musicIndex-1+musicQueue.length) % musicQueue.length;
+  playSong(musicQueue[musicIndex]);
+}
+audioEl.addEventListener('ended', ()=>{ if(repeatOn) { audioEl.currentTime=0; audioEl.play(); } else nextSong(); });
+async function renderMiniPlayer(song){
+  const el = document.getElementById('mini-player');
+  el.innerHTML = `
+    <img class="cover" src="${song.cover||''}">
+    <div class="info"><div class="t">${escapeHtml(song.title)}</div><div class="a">${escapeHtml(song.artist||'')}</div></div>
+    <div class="controls">
+      <button id="mp-shuffle" style="opacity:${shuffleOn?1:0.4}">🔀</button>
+      <button id="mp-prev">⏮</button>
+      <button id="mp-play">${audioEl.paused?'▶':'⏸'}</button>
+      <button id="mp-next">⏭</button>
+      <button id="mp-repeat" style="opacity:${repeatOn?1:0.4}">🔁</button>
+    </div>
+    <div class="seek"><input type="range" id="mp-seek" min="0" max="100" value="0"></div>
+    <input type="range" id="mp-vol" min="0" max="1" step="0.01" value="${audioEl.volume}" style="width:70px;">
+  `;
+  el.classList.add('show');
+  document.getElementById('mp-play').addEventListener('click', ()=>{ if(audioEl.paused) audioEl.play(); else audioEl.pause(); renderMiniPlayer(song); });
+  document.getElementById('mp-prev').addEventListener('click', prevSong);
+  document.getElementById('mp-next').addEventListener('click', nextSong);
+  document.getElementById('mp-shuffle').addEventListener('click', ()=>{ shuffleOn=!shuffleOn; renderMiniPlayer(song); });
+  document.getElementById('mp-repeat').addEventListener('click', ()=>{ repeatOn=!repeatOn; renderMiniPlayer(song); });
+  document.getElementById('mp-vol').addEventListener('input', e=> audioEl.volume = e.target.value);
+  const seek = document.getElementById('mp-seek');
+  seek.addEventListener('input', ()=>{ if(audioEl.duration) audioEl.currentTime = (seek.value/100)*audioEl.duration; });
+  audioEl.ontimeupdate = ()=>{ if(audioEl.duration) seek.value = (audioEl.currentTime/audioEl.duration)*100; };
+}
+
+let musicState = {tab:'library', category:''};
+async function renderMusic(container){
+  const songs = (await dbGetAll('music')).sort((a,b)=>b.createdAt-a.createdAt);
+  const playlists = await dbGetAll('playlists');
+  const DEFAULT_PLAYLIST_NAMES = ['current obsession','songs that remind me of people','study','late night','happy','sad','2026','random'];
+  container.innerHTML = `
+    <h1 class="page-title">music room 🎧</h1>
+    <p class="page-sub">upload your own songs and build the soundtrack to your world.</p>
+    <div class="row wrap" style="margin-bottom:16px;">
+      <button class="btn ${musicState.tab==='library'?'':'soft'}" data-mtab="library">🎵 Library</button>
+      <button class="btn ${musicState.tab==='playlists'?'':'soft'}" data-mtab="playlists">📻 Playlists</button>
+      <label class="btn secondary" style="margin-left:auto;">+ upload song<input type="file" id="song-upload" accept="audio/*" style="display:none;"></label>
+    </div>
+    <div id="music-body"></div>
+  `;
+  container.querySelectorAll('[data-mtab]').forEach(b=> b.addEventListener('click', ()=>{ musicState.tab=b.dataset.mtab; renderMusic(container); }));
+  document.getElementById('song-upload').addEventListener('change', async e=>{
+    const f = e.target.files[0]; if(!f) return;
+    openModal(`
+      <h3 class="hand" style="font-size:24px;">new song ✎</h3>
+      <label class="field-label">title</label><input type="text" id="s-title" value="${f.name.replace(/\.[^.]+$/,'')}">
+      <label class="field-label">artist</label><input type="text" id="s-artist" placeholder="artist name">
+      <label class="field-label">category</label>
+      <select id="s-category">${DEFAULT_PLAYLIST_NAMES.map(c=>`<option>${c}</option>`).join('')}</select>
+      <label class="field-label">cover image (optional)</label><input type="file" id="s-cover" accept="image/*">
+      <button class="btn" id="s-save">save song</button>
+    `);
+    document.getElementById('s-save').addEventListener('click', async ()=>{
+      const audioDataURL = await fileToDataURL(f);
+      const coverFile = document.getElementById('s-cover').files[0];
+      const cover = coverFile ? await fileToDataURL(coverFile) : '';
+      await dbPut('music', {id:uid(), title:document.getElementById('s-title').value||'untitled', artist:document.getElementById('s-artist').value, category:document.getElementById('s-category').value, cover, favorite:false, audioDataURL, createdAt:Date.now()});
+      closeModal(); renderMusic(container); toast('song added ♡');
+    });
+  });
+  const body = document.getElementById('music-body');
+  if(musicState.tab==='library'){
+    body.innerHTML = songs.length ? `<div class="grid cols-3">${songs.map(songCard).join('')}</div>` :
+      `<div class="empty-state"><div class="big">🎧</div>upload your first song to start your music room.</div>`;
+    bindSongCards(body, songs);
+  } else {
+    body.innerHTML = `<div class="grid cols-3">
+      ${DEFAULT_PLAYLIST_NAMES.map(name=>{
+        const count = songs.filter(s=>s.category===name).length;
+        return `<div class="card" data-open-playlist="${escapeHtml(name)}" style="cursor:pointer;"><div class="hand" style="font-size:20px;">${name}</div><div class="muted" style="font-size:12px;">${count} songs</div></div>`;
+      }).join('')}
+    </div>
+    <div id="playlist-detail" style="margin-top:16px;"></div>`;
+    body.querySelectorAll('[data-open-playlist]').forEach(el=> el.addEventListener('click', ()=>{
+      const name = el.dataset.openPlaylist;
+      const list = songs.filter(s=>s.category===name);
+      const detail = document.getElementById('playlist-detail');
+      detail.innerHTML = `<div class="hand" style="font-size:22px;">${name}</div><div class="grid cols-3" style="margin-top:10px;">${list.map(songCard).join('') || '<p class="muted">no songs here yet.</p>'}</div>`;
+      bindSongCards(detail, list);
+    }));
+  }
+}
+function songCard(s){
+  return `<div class="card">
+    <img src="${s.cover||''}" style="width:100%;height:100px;object-fit:cover;border-radius:14px;background:var(--pink);">
+    <div style="font-weight:700;margin-top:8px;font-size:14px;">${escapeHtml(s.title)}</div>
+    <div class="muted" style="font-size:12px;">${escapeHtml(s.artist||'')}</div>
+    <div class="row" style="margin-top:8px;">
+      <button class="btn small" data-play="${s.id}">▶ play</button>
+      <button class="btn icon small soft" data-fav-song="${s.id}">${s.favorite?'💗':'🤍'}</button>
+      <button class="btn icon small danger" data-del-song="${s.id}">🗑</button>
+    </div>
+  </div>`;
+}
+function bindSongCards(scope, list){
+  scope.querySelectorAll('[data-play]').forEach(b=> b.addEventListener('click', ()=> playSong(b.dataset.play, list.map(s=>s.id))));
+  scope.querySelectorAll('[data-fav-song]').forEach(b=> b.addEventListener('click', async ()=>{ const s=list.find(x=>x.id===b.dataset.favSong); s.favorite=!s.favorite; await dbPut('music',s); renderRoute(); }));
+  scope.querySelectorAll('[data-del-song]').forEach(b=> b.addEventListener('click', async ()=>{ if(confirm('delete this song?')){ await dbDelete('music', b.dataset.delSong); renderRoute(); } }));
+}
+registerRoom('music', renderMusic);
+
+registerRoom('desk', (container, param)=> renderBoardGallery(container, 'deskCanvases', param, {
+  title:'my desk', sub:'an endless canvas for anything — drag, resize, rotate, make it yours.',
+  noun:'canvas', backHash:'#/desk', defaultName:'new canvas', emptyIcon:'🖼️',
+  emptyText:'no canvases yet. try "My Dream Life" or "Things I Love" ♡'
+}));
+registerRoom('scrapbook', (container, param)=> renderBoardGallery(container, 'scrapbookPages', param, {
+  title:'scrapbook', sub:'decorate a page like the real thing — photos, notes, stickers, layers.',
+  noun:'page', backHash:'#/scrapbook', defaultName:'new page', emptyIcon:'📎',
+  emptyText:'no pages yet. start decorating your first one ♡'
+}));
+
+/* =========================================================
+   MEMORIES
+========================================================= */
+async function renderMemories(container){
+  const memories = (await dbGetAll('memories')).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  const byYear = {};
+  memories.forEach(m=>{ const y=(m.date||todayStr()).slice(0,4); (byYear[y]=byYear[y]||[]).push(m); });
+  const years = Object.keys(byYear).sort().reverse();
+  container.innerHTML = `
+    <h1 class="page-title">memories 📸</h1>
+    <p class="page-sub">a timeline of everything worth keeping.</p>
+    <div class="card" style="margin-bottom:18px;">
+      <div class="row wrap">
+        <label class="btn">+ photo/video<input type="file" id="mem-media" accept="image/*,video/*" style="display:none;"></label>
+        <label class="btn secondary">+ audio<input type="file" id="mem-audio" accept="audio/*" style="display:none;"></label>
+        <button class="btn soft" id="mem-text-btn">+ text memory</button>
+      </div>
+    </div>
+    <div id="memories-timeline">
+      ${years.length? years.map(y=>`
+        <div class="hand" style="font-size:28px;margin:18px 0 8px;">${y}</div>
+        <div class="grid cols-4">${byYear[y].map(memoryCard).join('')}</div>
+      `).join('') : `<div class="empty-state"><div class="big">📸</div>no memories saved yet — add your first one ♡</div>`}
+    </div>
+  `;
+  document.getElementById('mem-media').addEventListener('change', async e=>{
+    const f = e.target.files[0]; if(!f) return;
+    const src = await fileToDataURL(f);
+    await dbPut('memories', {id:uid(), type:f.type.startsWith('video')?'video':'photo', src, date:todayStr(), category:'', tags:[], createdAt:Date.now()});
+    renderMemories(container); toast('memory saved ♡');
+  });
+  document.getElementById('mem-audio').addEventListener('change', async e=>{
+    const f = e.target.files[0]; if(!f) return;
+    const src = await fileToDataURL(f);
+    await dbPut('memories', {id:uid(), type:'audio', src, date:todayStr(), category:'', tags:[], createdAt:Date.now()});
+    renderMemories(container); toast('memory saved ♡');
+  });
+  document.getElementById('mem-text-btn').addEventListener('click', ()=>{
+    openModal(`<h3 class="hand" style="font-size:24px;">quick memory ✎</h3>
+      <textarea id="mem-text" placeholder="what happened?"></textarea>
+      <input type="date" id="mem-date" value="${todayStr()}">
+      <button class="btn" id="mem-text-save">save</button>`);
+    document.getElementById('mem-text-save').addEventListener('click', async ()=>{
+      const text = document.getElementById('mem-text').value.trim(); if(!text) return;
+      await dbPut('memories', {id:uid(), type:'text', text, date:document.getElementById('mem-date').value, category:'', tags:[], createdAt:Date.now()});
+      closeModal(); renderMemories(container); toast('memory saved ♡');
+    });
+  });
+  container.querySelectorAll('[data-del-memory]').forEach(b=> b.addEventListener('click', async ()=>{ if(confirm('delete this memory?')){ await dbDelete('memories', b.dataset.delMemory); renderMemories(container); } }));
+}
+function memoryCard(m){
+  let media='';
+  if(m.type==='photo') media = `<img src="${m.src}" style="width:100%;height:110px;object-fit:cover;border-radius:14px;">`;
+  else if(m.type==='video') media = `<video src="${m.src}" controls style="width:100%;height:110px;border-radius:14px;object-fit:cover;"></video>`;
+  else if(m.type==='audio') media = `<audio src="${m.src}" controls style="width:100%;"></audio>`;
+  else media = `<div style="min-height:80px;font-size:13.5px;padding:6px;">${escapeHtml(m.text||'')}</div>`;
+  return `<div class="card">${media}<div class="muted" style="font-size:11px;margin-top:6px;">${fmtShort(m.date)}</div>
+    <button class="btn icon small danger" data-del-memory="${m.id}" style="position:absolute;top:8px;right:8px;">🗑</button></div>`;
+}
+registerRoom('memories', renderMemories);
+
+/* =========================================================
+   OUTFIT INSPO
+========================================================= */
+const OUTFIT_CATS = ['casual','college','traditional','party','summer','winter','accessories','shoes','bags','makeup','hair'];
+let outfitState = {tab:'inspo', category:''};
+async function renderOutfits(container, param){
+  if(param && param.startsWith('board/')) return renderBoardGallery(container, 'outfitBoards', param.split('/')[1], {
+    title:'create an outfit', sub:'combine pieces into a look.', noun:'board', backHash:'#/outfits/board', defaultName:'new outfit', emptyIcon:'👗', emptyText:'no outfit boards yet.'
+  });
+  const items = (await dbGetAll('outfits')).sort((a,b)=>b.createdAt-a.createdAt);
+  const filtered = outfitState.category ? items.filter(i=>i.category===outfitState.category) : items;
+  container.innerHTML = `
+    <h1 class="page-title">outfit inspo 👗</h1>
+    <p class="page-sub">save looks you love and remix them into your own.</p>
+    <div class="row wrap" style="margin-bottom:16px;">
+      <button class="btn ${outfitState.tab==='inspo'?'':'soft'}" data-otab="inspo">📌 Inspiration</button>
+      <button class="btn ${outfitState.tab==='boards'?'':'soft'}" data-otab="boards">🧵 Create an Outfit</button>
+      <label class="btn secondary" style="margin-left:auto;">+ save image<input type="file" id="outfit-upload" accept="image/*" multiple style="display:none;"></label>
+    </div>
+    <div id="outfit-body"></div>
+  `;
+  container.querySelectorAll('[data-otab]').forEach(b=> b.addEventListener('click', ()=>{ outfitState.tab=b.dataset.otab; renderOutfits(container); }));
+  document.getElementById('outfit-upload').addEventListener('change', async e=>{
+    for(const f of e.target.files){
+      const src = await fileToDataURL(f);
+      await dbPut('outfits', {id:uid(), src, category:'casual', tags:[], favorite:false, createdAt:Date.now()});
+    }
+    renderOutfits(container); toast('added to inspo ♡');
+  });
+  const body = document.getElementById('outfit-body');
+  if(outfitState.tab==='inspo'){
+    body.innerHTML = `
+      <div class="row wrap" style="margin-bottom:14px;">
+        <button class="chip" data-ocat="" style="cursor:pointer;background:${!outfitState.category?'var(--pink-deep)':'var(--lavender)'};">all</button>
+        ${OUTFIT_CATS.map(c=>`<button class="chip" data-ocat="${c}" style="cursor:pointer;background:${outfitState.category===c?'var(--pink-deep)':'var(--lavender)'};">${c}</button>`).join('')}
+      </div>
+      <div class="grid cols-4">
+        ${filtered.length? filtered.map(o=>`
+          <div class="card" style="padding:8px;">
+            <img src="${o.src}" style="width:100%;height:150px;object-fit:cover;border-radius:14px;">
+            <select data-set-cat="${o.id}" style="margin:8px 0 4px;">${OUTFIT_CATS.map(c=>`<option ${o.category===c?'selected':''}>${c}</option>`).join('')}</select>
+            <div class="row between">
+              <button class="btn icon small soft" data-fav-outfit="${o.id}">${o.favorite?'💗':'🤍'}</button>
+              <button class="btn icon small danger" data-del-outfit="${o.id}">🗑</button>
+            </div>
+          </div>`).join('') : `<div class="empty-state" style="grid-column:1/-1;"><div class="big">👗</div>save your first outfit inspiration photo.</div>`}
+      </div>
+    `;
+    body.querySelectorAll('[data-ocat]').forEach(b=> b.addEventListener('click', ()=>{ outfitState.category=b.dataset.ocat; renderOutfits(container); }));
+    body.querySelectorAll('[data-set-cat]').forEach(s=> s.addEventListener('change', async ()=>{ const o=items.find(x=>x.id===s.dataset.setCat); o.category=s.value; await dbPut('outfits',o); }));
+    body.querySelectorAll('[data-fav-outfit]').forEach(b=> b.addEventListener('click', async ()=>{ const o=items.find(x=>x.id===b.dataset.favOutfit); o.favorite=!o.favorite; await dbPut('outfits',o); renderOutfits(container); }));
+    body.querySelectorAll('[data-del-outfit]').forEach(b=> b.addEventListener('click', async ()=>{ if(confirm('delete this image?')){ await dbDelete('outfits', b.dataset.delOutfit); renderOutfits(container); } }));
+  } else {
+    renderBoardGallery(body, 'outfitBoards', null, {
+      title:'', sub:'', noun:'outfit board', backHash:'#/outfits/board', defaultName:'new outfit', emptyIcon:'🧵', emptyText:'build your first outfit board — drag in pieces and arrange them ♡'
+    });
+  }
+}
+registerRoom('outfits', renderOutfits);
+
+/* =========================================================
+   MY BRAIN
+========================================================= */
+const BRAIN_CATS = ['ideas','things to do','things to buy','places','dreams','random thoughts','reminders'];
+async function renderBrain(container){
+  const notes = (await dbGetAll('brainNotes')).sort((a,b)=>b.createdAt-a.createdAt);
+  container.innerHTML = `
+    <h1 class="page-title">my brain 🧠</h1>
+    <p class="page-sub">dump anything here fast — sort it out later, or never.</p>
+    <div class="card" style="margin-bottom:16px;">
+      <div class="row wrap">
+        <input type="text" id="brain-quick" placeholder="I want to visit Japan..." style="flex:1;margin:0;min-width:200px;">
+        <button class="btn" id="brain-add">+ add</button>
+      </div>
+    </div>
+    <div class="row wrap" style="margin-bottom:14px;">
+      <button class="chip" data-bcat="" style="cursor:pointer;">all</button>
+      ${BRAIN_CATS.map(c=>`<button class="chip" data-bcat="${c}" style="cursor:pointer;">${c}</button>`).join('')}
+    </div>
+    <div class="grid cols-3" id="brain-grid">
+      ${notes.length? notes.map(brainCard).join('') : `<div class="empty-state" style="grid-column:1/-1;"><div class="big">🧠</div>nothing here yet — type a thought above.</div>`}
+    </div>
+  `;
+  document.getElementById('brain-add').addEventListener('click', addBrainNote);
+  document.getElementById('brain-quick').addEventListener('keydown', e=>{ if(e.key==='Enter') addBrainNote(); });
+  async function addBrainNote(){
+    const text = document.getElementById('brain-quick').value.trim(); if(!text) return;
+    await dbPut('brainNotes', {id:uid(), text, category:'', createdAt:Date.now()});
+    renderBrain(container);
+    toast('added to your brain ♡');
+  }
+  container.querySelectorAll('[data-bcat]').forEach(b=> b.addEventListener('click', ()=>{
+    const cat = b.dataset.bcat;
+    document.querySelectorAll('#brain-grid > div').forEach(c=>{ c.style.display = (!cat || c.dataset.cat===cat) ? '' : 'none'; });
+  }));
+  container.querySelectorAll('[data-set-brain-cat]').forEach(s=> s.addEventListener('change', async ()=>{ const n=notes.find(x=>x.id===s.dataset.setBrainCat); n.category=s.value; await dbPut('brainNotes',n); renderBrain(container); }));
+  container.querySelectorAll('[data-del-brain]').forEach(b=> b.addEventListener('click', async ()=>{ await dbDelete('brainNotes', b.dataset.delBrain); renderBrain(container); }));
+}
+function brainCard(n){
+  return `<div class="card" data-cat="${n.category}">
+    <p style="font-size:14.5px;">${escapeHtml(n.text)}</p>
+    <select data-set-brain-cat="${n.id}" style="margin:6px 0;">
+      <option value="" ${!n.category?'selected':''}>uncategorized</option>
+      ${BRAIN_CATS.map(c=>`<option ${n.category===c?'selected':''}>${c}</option>`).join('')}
+    </select>
+    <button class="btn icon small danger" data-del-brain="${n.id}" style="position:absolute;top:10px;right:10px;">🗑</button>
+  </div>`;
+}
+registerRoom('brain', renderBrain);
+
+/* =========================================================
+   WISHLIST
+========================================================= */
+const WISH_SECTIONS = ['NOW','THIS YEAR','SOMEDAY','LIFETIME'];
+async function renderWishlist(container){
+  const items = (await dbGetAll('wishlist')).sort((a,b)=>b.createdAt-a.createdAt);
+  const owned = items.filter(i=>i.gotIt);
+  container.innerHTML = `
+    <h1 class="page-title">wishlist 🎁</h1>
+    <p class="page-sub">everything you're dreaming of, sorted by how soon.</p>
+    <button class="btn" id="wish-add">+ add item</button>
+    <div class="grid cols-4" style="margin-top:16px;">
+      ${WISH_SECTIONS.map(sec=>`
+        <div>
+          <div class="hand" style="font-size:22px;margin-bottom:8px;">${sec}</div>
+          ${items.filter(i=>i.section===sec && !i.gotIt).map(wishCard).join('') || '<p class="muted" style="font-size:12.5px;">nothing here yet.</p>'}
+        </div>`).join('')}
+    </div>
+    <hr class="dashed">
+    <div class="hand" style="font-size:24px;margin:14px 0;">things i own now ♡</div>
+    <div class="grid cols-4">${owned.map(wishCard).join('') || '<p class="muted">nothing yet — one day!</p>'}</div>
+  `;
+  document.getElementById('wish-add').addEventListener('click', ()=>{
+    openModal(`<h3 class="hand" style="font-size:24px;">new wish ✎</h3>
+      <label class="field-label">name</label><input type="text" id="w-name">
+      <label class="field-label">image</label><input type="file" id="w-image" accept="image/*">
+      <label class="field-label">price</label><input type="text" id="w-price" placeholder="$...">
+      <label class="field-label">note</label><textarea id="w-note"></textarea>
+      <label class="field-label">link</label><input type="url" id="w-link" placeholder="https://">
+      <label class="field-label">when</label>
+      <select id="w-section">${WISH_SECTIONS.map(s=>`<option>${s}</option>`).join('')}</select>
+      <button class="btn" id="w-save">add to wishlist</button>`);
+    document.getElementById('w-save').addEventListener('click', async ()=>{
+      const name = document.getElementById('w-name').value.trim(); if(!name) return;
+      const imgFile = document.getElementById('w-image').files[0];
+      const image = imgFile ? await fileToDataURL(imgFile) : '';
+      await dbPut('wishlist', {id:uid(), name, image, price:document.getElementById('w-price').value, note:document.getElementById('w-note').value, link:document.getElementById('w-link').value, section:document.getElementById('w-section').value, category:'', gotIt:false, createdAt:Date.now()});
+      closeModal(); renderWishlist(container); toast('added to wishlist ♡');
+    });
+  });
+  container.querySelectorAll('[data-got-it]').forEach(b=> b.addEventListener('click', async ()=>{ const i=items.find(x=>x.id===b.dataset.gotIt); i.gotIt=true; await dbPut('wishlist',i); renderWishlist(container); toast('yay! ♡'); }));
+  container.querySelectorAll('[data-del-wish]').forEach(b=> b.addEventListener('click', async ()=>{ if(confirm('remove this wish?')){ await dbDelete('wishlist', b.dataset.delWish); renderWishlist(container); } }));
+}
+function wishCard(i){
+  return `<div class="card" style="margin-bottom:10px;">
+    ${i.image?`<img src="${i.image}" style="width:100%;height:90px;object-fit:cover;border-radius:12px;">`:''}
+    <div style="font-weight:700;font-size:13.5px;margin-top:6px;">${escapeHtml(i.name)}</div>
+    ${i.price?`<div class="muted" style="font-size:12px;">${escapeHtml(i.price)}</div>`:''}
+    ${i.link?`<a href="${escapeHtml(i.link)}" target="_blank" style="font-size:11.5px;">view link ↗</a>`:''}
+    <div class="row" style="margin-top:6px;">
+      ${!i.gotIt?`<button class="btn small" data-got-it="${i.id}">I GOT IT ♡</button>`:''}
+      <button class="btn icon small danger" data-del-wish="${i.id}">🗑</button>
+    </div>
+  </div>`;
+}
+registerRoom('wishlist', renderWishlist);
+
+/* =========================================================
+   LIFE MAP
+========================================================= */
+async function renderLifeMap(container){
+  const events = (await dbGetAll('lifeMap')).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+  container.innerHTML = `
+    <h1 class="page-title">life map 🗺️</h1>
+    <p class="page-sub">the story of your life, in your own words and your own timeline.</p>
+    <button class="btn" id="life-add">+ add a moment</button>
+    <div style="margin-top:24px;border-left:3px dashed var(--line);padding-left:24px;">
+      ${events.length? events.map(ev=>`
+        <div class="card" style="margin-bottom:18px;position:relative;">
+          <div style="position:absolute;left:-33px;top:20px;width:14px;height:14px;border-radius:50%;background:var(--rose);"></div>
+          <div class="muted" style="font-size:12px;">${fmtShort(ev.date)}</div>
+          <div class="hand" style="font-size:22px;">${escapeHtml(ev.title)}</div>
+          <p style="font-size:14px;">${escapeHtml(ev.description||'')}</p>
+          ${ev.photo?`<img src="${ev.photo}" style="max-height:140px;border-radius:12px;margin-top:6px;">`:''}
+          <button class="btn icon small danger" data-del-life="${ev.id}" style="position:absolute;top:10px;right:10px;">🗑</button>
+        </div>`).join('') : `<div class="empty-state"><div class="big">🗺️</div>your life map is empty — add your first moment ♡</div>`}
+    </div>
+  `;
+  document.getElementById('life-add').addEventListener('click', ()=>{
+    openModal(`<h3 class="hand" style="font-size:24px;">new life moment ✎</h3>
+      <label class="field-label">date</label><input type="date" id="l-date" value="${todayStr()}">
+      <label class="field-label">title</label><input type="text" id="l-title" placeholder="e.g. Started college">
+      <label class="field-label">description</label><textarea id="l-desc"></textarea>
+      <label class="field-label">photo</label><input type="file" id="l-photo" accept="image/*">
+      <button class="btn" id="l-save">add to timeline</button>`);
+    document.getElementById('l-save').addEventListener('click', async ()=>{
+      const title = document.getElementById('l-title').value.trim(); if(!title) return;
+      const f = document.getElementById('l-photo').files[0];
+      const photo = f ? await fileToDataURL(f) : '';
+      await dbPut('lifeMap', {id:uid(), date:document.getElementById('l-date').value, title, description:document.getElementById('l-desc').value, photo, createdAt:Date.now()});
+      closeModal(); renderLifeMap(container); toast('added to your life map ♡');
+    });
+  });
+  container.querySelectorAll('[data-del-life]').forEach(b=> b.addEventListener('click', async ()=>{ if(confirm('remove this moment?')){ await dbDelete('lifeMap', b.dataset.delLife); renderLifeMap(container); } }));
+}
+registerRoom('lifemap', renderLifeMap);
+
+/* =========================================================
+   GAMES / PLAYGROUND
+========================================================= */
+const GAME_LIST = [
+  {id:'ttt', icon:'❌⭕', name:'Tic Tac Toe'},
+  {id:'memory', icon:'🃏', name:'Memory Match'},
+  {id:'snake', icon:'🐍', name:'Snake'},
+  {id:'color', icon:'🖍️', name:'Coloring Pad'},
+];
+async function renderGames(container, param){
+  container.innerHTML = `
+    <h1 class="page-title">playground 🎮</h1>
+    <p class="page-sub">small, silly, no-pressure games for when you're bored.</p>
+    <div class="grid cols-4" id="game-grid">
+      ${GAME_LIST.map(g=>`<div class="card center" data-game="${g.id}" style="cursor:pointer;"><div style="font-size:38px;">${g.icon}</div><div class="hand" style="font-size:20px;">${g.name}</div></div>`).join('')}
+    </div>
+    <div id="game-mount" style="margin-top:20px;"></div>
+  `;
+  container.querySelectorAll('[data-game]').forEach(c=> c.addEventListener('click', ()=> loadGame(c.dataset.game)));
+  if(param) loadGame(param);
+  function loadGame(id){
+    if(window.__gameCleanup){ window.__gameCleanup(); window.__gameCleanup = null; }
+    const mount = document.getElementById('game-mount');
+    if(id==='ttt') initTicTacToe(mount);
+    else if(id==='memory') initMemoryMatch(mount);
+    else if(id==='snake') initSnake(mount);
+    else if(id==='color') initColoring(mount);
+  }
+}
+registerRoom('games', renderGames);
+
+function initTicTacToe(mount){
+  let board = Array(9).fill(null), turn='❌', over=false;
+  function winner(){
+    const L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    for(const [a,b,c] of L) if(board[a] && board[a]===board[b] && board[b]===board[c]) return board[a];
+    return board.every(Boolean) ? 'draw' : null;
+  }
+  function draw(){
+    const w = winner();
+    mount.innerHTML = `<div class="card center" style="max-width:320px;">
+      <div class="hand" style="font-size:22px;">tic tac toe</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:14px auto;max-width:220px;">
+        ${board.map((v,i)=>`<button class="btn soft" data-cell="${i}" style="height:64px;font-size:26px;">${v||''}</button>`).join('')}
+      </div>
+      <div class="muted">${w ? (w==='draw'?"it's a draw!":`${w} wins! 🎉`) : `${turn}'s turn`}</div>
+      <button class="btn small" id="ttt-reset" style="margin-top:8px;">restart</button>
+    </div>`;
+    mount.querySelectorAll('[data-cell]').forEach(btn=> btn.addEventListener('click', ()=>{
+      const i = +btn.dataset.cell;
+      if(board[i] || winner()) return;
+      board[i]=turn; turn = turn==='❌'?'⭕':'❌'; draw();
+    }));
+    document.getElementById('ttt-reset').addEventListener('click', ()=>{ board=Array(9).fill(null); turn='❌'; draw(); });
+  }
+  draw();
+}
+function initMemoryMatch(mount){
+  const emojis = ['🌸','🎧','📖','✨','🍓','🎀','🌙','☁️'];
+  let deck = [...emojis, ...emojis].sort(()=>Math.random()-0.5).map(e=>({e, flipped:false, matched:false}));
+  let first=null, lock=false, moves=0;
+  function draw(){
+    mount.innerHTML = `<div class="card" style="max-width:400px;">
+      <div class="row between"><div class="hand" style="font-size:22px;">memory match</div><div class="muted">moves: ${moves}</div></div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px;">
+        ${deck.map((c,i)=>`<button class="btn soft" data-c="${i}" style="height:56px;font-size:24px;">${(c.flipped||c.matched)?c.e:'❓'}</button>`).join('')}
+      </div>
+      <button class="btn small" id="mm-reset" style="margin-top:10px;">restart</button>
+      ${deck.every(c=>c.matched)?'<div class="hand" style="font-size:20px;margin-top:8px;">you matched them all! ✨</div>':''}
+    </div>`;
+    mount.querySelectorAll('[data-c]').forEach(btn=> btn.addEventListener('click', ()=>{
+      const i = +btn.dataset.c;
+      if(lock || deck[i].flipped || deck[i].matched) return;
+      deck[i].flipped = true;
+      if(first===null){ first=i; draw(); return; }
+      moves++;
+      if(deck[first].e===deck[i].e){ deck[first].matched=true; deck[i].matched=true; first=null; draw(); }
+      else{ lock=true; draw(); setTimeout(()=>{ deck[first].flipped=false; deck[i].flipped=false; first=null; lock=false; draw(); }, 700); }
+    }));
+    document.getElementById('mm-reset').addEventListener('click', ()=>{
+      deck = [...emojis, ...emojis].sort(()=>Math.random()-0.5).map(e=>({e, flipped:false, matched:false}));
+      first=null; lock=false; moves=0; draw();
+    });
+  }
+  draw();
+}
+function initSnake(mount){
+  mount.innerHTML = `<div class="card center" style="max-width:360px;">
+    <div class="hand" style="font-size:22px;">snake</div>
+    <canvas id="snake-canvas" width="300" height="300" style="background:var(--paper-2);border-radius:14px;margin-top:10px;touch-action:none;"></canvas>
+    <div class="muted" id="snake-score" style="margin-top:6px;">score: 0</div>
+    <p class="muted" style="font-size:12px;">arrow keys / swipe to move</p>
+    <button class="btn small" id="snake-restart">restart</button>
+  </div>`;
+  const cvs = document.getElementById('snake-canvas'), ctx = cvs.getContext('2d');
+  const size=15, cells=20;
+  let snake, dir, food, score, dead, loopId;
+  function reset(){
+    snake=[{x:10,y:10}]; dir={x:1,y:0}; score=0; dead=false; placeFood();
+    document.getElementById('snake-score').textContent = 'score: 0';
+    clearInterval(loopId); loopId = setInterval(tick, 130);
+  }
+  function placeFood(){ food={x:Math.floor(Math.random()*cells), y:Math.floor(Math.random()*cells)}; }
+  function tick(){
+    if(dead) return;
+    const head = {x:snake[0].x+dir.x, y:snake[0].y+dir.y};
+    if(head.x<0||head.y<0||head.x>=cells||head.y>=cells||snake.some(s=>s.x===head.x&&s.y===head.y)){ dead=true; clearInterval(loopId); toast('game over — score '+score); return; }
+    snake.unshift(head);
+    if(head.x===food.x && head.y===food.y){ score++; document.getElementById('snake-score').textContent='score: '+score; placeFood(); }
+    else snake.pop();
+    render();
+  }
+  function render(){
+    ctx.clearRect(0,0,300,300);
+    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--rose');
+    snake.forEach(s=> ctx.fillRect(s.x*size, s.y*size, size-2, size-2));
+    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--sage-deep');
+    ctx.fillRect(food.x*size, food.y*size, size-2, size-2);
+  }
+  function setDir(nx,ny){ if(snake.length>1 && snake[0].x+nx===snake[1].x && snake[0].y+ny===snake[1].y) return; dir={x:nx,y:ny}; }
+  const keyHandler = (e)=>{
+    if(e.key==='ArrowUp') setDir(0,-1); else if(e.key==='ArrowDown') setDir(0,1);
+    else if(e.key==='ArrowLeft') setDir(-1,0); else if(e.key==='ArrowRight') setDir(1,0);
+  };
+  document.addEventListener('keydown', keyHandler);
+  let touchStart=null;
+  cvs.addEventListener('touchstart', e=> touchStart = e.touches[0]);
+  cvs.addEventListener('touchend', e=>{
+    if(!touchStart) return;
+    const dx = e.changedTouches[0].clientX-touchStart.clientX, dy = e.changedTouches[0].clientY-touchStart.clientY;
+    if(Math.abs(dx)>Math.abs(dy)) setDir(dx>0?1:-1,0); else setDir(0,dy>0?1:-1);
+  });
+  document.getElementById('snake-restart').addEventListener('click', reset);
+  window.__gameCleanup = ()=>{ clearInterval(loopId); document.removeEventListener('keydown', keyHandler); };
+  reset(); render();
+}
+function initColoring(mount){
+  mount.innerHTML = `<div class="card" style="max-width:420px;">
+    <div class="hand" style="font-size:22px;">coloring pad</div>
+    <canvas id="color-canvas" width="380" height="300" style="background:#fff;border-radius:14px;margin-top:10px;touch-action:none;cursor:crosshair;"></canvas>
+    <div class="row wrap" style="margin-top:10px;">
+      ${['#5B4A46','#CB7F91','#E3A9B9','#C6B3E0','#9FB98C','#E8C978','#28414A','#ffffff'].map(c=>`<button class="btn icon small" data-color="${c}" style="background:${c};width:28px;height:28px;padding:0;border:2px solid #ccc;"></button>`).join('')}
+      <input type="range" id="brush-size" min="2" max="30" value="6">
+      <button class="btn small soft" id="color-clear">clear</button>
+      <button class="btn small" id="color-save">save to memories</button>
+    </div>
+  </div>`;
+  const cvs = document.getElementById('color-canvas'), ctx = cvs.getContext('2d');
+  ctx.fillStyle='#fff'; ctx.fillRect(0,0,380,300);
+  let drawing=false, color='#5B4A46', size=6;
+  mount.querySelectorAll('[data-color]').forEach(b=> b.addEventListener('click', ()=> color=b.dataset.color));
+  document.getElementById('brush-size').addEventListener('input', e=> size=+e.target.value);
+  function pos(e){ const r=cvs.getBoundingClientRect(); const t=e.touches?e.touches[0]:e; return {x:t.clientX-r.left, y:t.clientY-r.top}; }
+  function start(e){ drawing=true; const p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); e.preventDefault(); }
+  function move(e){ if(!drawing) return; const p=pos(e); ctx.lineTo(p.x,p.y); ctx.strokeStyle=color; ctx.lineWidth=size; ctx.lineCap='round'; ctx.stroke(); e.preventDefault(); }
+  function end(){ drawing=false; }
+  cvs.addEventListener('mousedown', start); cvs.addEventListener('mousemove', move); window.addEventListener('mouseup', end);
+  cvs.addEventListener('touchstart', start); cvs.addEventListener('touchmove', move); cvs.addEventListener('touchend', end);
+  document.getElementById('color-clear').addEventListener('click', ()=>{ ctx.fillStyle='#fff'; ctx.fillRect(0,0,380,300); });
+  document.getElementById('color-save').addEventListener('click', async ()=>{
+    await dbPut('memories', {id:uid(), type:'photo', src:cvs.toDataURL('image/png'), date:todayStr(), category:'doodle', tags:['doodle'], createdAt:Date.now()});
+    toast('saved to memories ♡');
+  });
+}
+
+/* =========================================================
+   GLOBAL SEARCH
+========================================================= */
+async function openSearch(){
+  const root = document.getElementById('modal-root');
+  root.innerHTML = `<div class="search-overlay" id="search-overlay">
+    <div class="search-box">
+      <input type="text" id="global-search-input" placeholder="search your world... (e.g. flowers, Puntu, sad)" autofocus>
+      <div id="global-search-results"><p class="muted">start typing to search journal, stickers, music, memories, wishlist & scrapbook.</p></div>
+    </div>
+  </div>`;
+  document.getElementById('search-overlay').addEventListener('click', e=>{ if(e.target.id==='search-overlay') root.innerHTML=''; });
+  document.getElementById('global-search-input').addEventListener('input', debounce(runSearch, 250));
+}
+async function runSearch(e){
+  const q = e.target.value.trim().toLowerCase();
+  const results = document.getElementById('global-search-results');
+  if(!q){ results.innerHTML = '<p class="muted">start typing to search.</p>'; return; }
+  const [journal, stickers, music, memories, wishlist, scrapbook, outfits, brain] = await Promise.all([
+    dbGetAll('journal'), dbGetAll('stickers'), dbGetAll('music'), dbGetAll('memories'), dbGetAll('wishlist'), dbGetAll('scrapbookPages'), dbGetAll('outfits'), dbGetAll('brainNotes')
+  ]);
+  const hits = [];
+  journal.forEach(j=>{ if((j.title+' '+j.text+' '+(j.tags||[]).join(' ')).toLowerCase().includes(q)) hits.push({icon:'📔', label:j.title||'journal entry', hash:'#/journal/entry/'+j.id}); });
+  stickers.forEach(s=>{ if(s.name.toLowerCase().includes(q) || (s.category||'').toLowerCase().includes(q)) hits.push({icon:'✨', label:s.name, hash:'#/stickers'}); });
+  music.forEach(m=>{ if((m.title+' '+(m.artist||'')).toLowerCase().includes(q)) hits.push({icon:'🎧', label:m.title, hash:'#/music'}); });
+  memories.forEach(m=>{ if(((m.text||'')+' '+(m.tags||[]).join(' ')).toLowerCase().includes(q)) hits.push({icon:'📸', label:m.text || (m.date+' memory'), hash:'#/memories'}); });
+  wishlist.forEach(w=>{ if(w.name.toLowerCase().includes(q)) hits.push({icon:'🎁', label:w.name, hash:'#/wishlist'}); });
+  scrapbook.forEach(p=>{ if((p.name||'').toLowerCase().includes(q)) hits.push({icon:'📎', label:p.name, hash:'#/scrapbook/'+p.id}); });
+  outfits.forEach(o=>{ if((o.category||'').toLowerCase().includes(q)) hits.push({icon:'👗', label:o.category, hash:'#/outfits'}); });
+  brain.forEach(b=>{ if(b.text.toLowerCase().includes(q)) hits.push({icon:'🧠', label:b.text, hash:'#/brain'}); });
+  results.innerHTML = hits.length ? hits.slice(0,40).map(h=>`<div class="search-result" data-hash="${h.hash}" style="cursor:pointer;">${h.icon} ${escapeHtml(h.label.slice(0,80))}</div>`).join('') : '<p class="muted">nothing found ♡</p>';
+  results.querySelectorAll('[data-hash]').forEach(el=> el.addEventListener('click', ()=>{ location.hash = el.dataset.hash; document.getElementById('modal-root').innerHTML=''; }));
+}
+
+/* =========================================================
+   INIT
+========================================================= */
+(async function init(){
+  await dbPromise;
+  if(!location.hash) location.hash = '#/home';
+  await renderRoute();
+  const meta = await getMeta();
+  if(meta.currentSongId){
+    const s = await dbGet('music', meta.currentSongId);
+    if(s){ audioEl.src = s.audioDataURL; renderMiniPlayer(s); }
+  }
+  window.__MYWORLD_READY__ = true;
+})();
+
+/* Board list helper: renders a gallery of boards for a store, "+ new board" and open one */
+async function renderBoardGallery(container, store, param, opts){
+  if(param){
+    container.innerHTML = `<button class="btn soft small" id="back-gallery">← back</button><div id="board-mount" style="margin-top:14px;"></div>`;
+    document.getElementById('back-gallery').addEventListener('click', ()=> location.hash = opts.backHash);
+    const board = new Board(store, param, document.getElementById('board-mount'), opts);
+    activeBoard = board;
+    await board.load();
+    return;
+  }
+  const boards = (await dbGetAll(store)).sort((a,b)=>(b.updatedAt||b.createdAt||0)-(a.updatedAt||a.createdAt||0));
+  container.innerHTML = `
+    <h1 class="page-title">${opts.title}</h1>
+    <p class="page-sub">${opts.sub}</p>
+    <div class="row" style="margin-bottom:16px;"><button class="btn" id="new-board-btn">+ new ${opts.noun}</button></div>
+    <div class="grid cols-4" id="board-gallery">
+      ${boards.length? boards.map(b=>`
+        <div class="card" data-open-board="${b.id}" style="cursor:pointer;background:var(--${b.background||'paper-2'});">
+          <div class="hand" style="font-size:19px;">${escapeHtml(b.name)}</div>
+          <div class="muted" style="font-size:11px;">${b.objects.length} items</div>
+          <button class="btn icon small danger" data-del-board="${b.id}" style="position:absolute;top:10px;right:10px;">🗑</button>
+        </div>`).join('') : `<div class="empty-state" style="grid-column:1/-1;"><div class="big">${opts.emptyIcon}</div>${opts.emptyText}</div>`}
+    </div>
+  `;
+  document.getElementById('new-board-btn').addEventListener('click', ()=>{
+    const id = uid();
+    location.hash = opts.backHash + '/' + id;
+  });
+  container.querySelectorAll('[data-open-board]').forEach(el=> el.addEventListener('click', (e)=>{
+    if(e.target.closest('[data-del-board]')) return;
+    location.hash = opts.backHash + '/' + el.dataset.openBoard;
+  }));
+  container.querySelectorAll('[data-del-board]').forEach(el=> el.addEventListener('click', async (e)=>{
+    e.stopPropagation();
+    if(confirm('delete this? it cannot be undone.')){ await dbDelete(store, el.dataset.delBoard); renderBoardGallery(container, store, null, opts); }
+  }));
+}
+</script>
+</body>
+</html>
